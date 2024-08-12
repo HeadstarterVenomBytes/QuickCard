@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
 import { ChatCompletionMessageParam } from "openai/src/resources/index.js";
-import { Flashcard } from "@/types/flashcard";
+import { FlashcardList } from "@/types/flashcardList";
 
 // TODO: switch this to use LangChain for prompts
 const systemPrompt = `
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   });
 
   // Parse and extract flashcards
-  const flashcardsData: { flashcards: Flashcard[] } = JSON.parse(
+  const flashcardsData: { flashcards: FlashcardList } = JSON.parse(
     completion.choices[0]?.message?.content as string
   );
 

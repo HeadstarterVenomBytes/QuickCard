@@ -6,11 +6,11 @@ import TypographyHeader from "../components/TypographyHeader";
 import TextInput from "../components/TextInput";
 import PrimaryButton from "../components/PrimaryButton";
 import FlashcardGrid from "../components/FlashcardGrid";
-import { Flashcard } from "@/types/flashcard";
+import { FlashcardList } from "@/types/flashcardList";
 
 export default function Generate(): React.JSX.Element {
   const [text, setText] = useState<string>("");
-  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+  const [flashcards, setFlashcards] = useState<FlashcardList>([]);
 
   const handleSubmit = async (): Promise<void> => {
     if (!text.trim()) {
@@ -28,7 +28,7 @@ export default function Generate(): React.JSX.Element {
         throw new Error("Failed to generate flashcards");
       }
 
-      const data: Flashcard[] = await response.json();
+      const data: FlashcardList = await response.json();
       setFlashcards(data);
     } catch (error) {
       console.error("Error generating flashcards:", error);

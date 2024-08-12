@@ -6,10 +6,10 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import { Flashcard } from "@/types/flashcard";
+import { FlashcardList } from "@/types/flashcardList";
 
 interface FlashcardGridProps {
-  flashcards: Flashcard[];
+  flashcards: FlashcardList;
 }
 
 const FlashcardGrid: React.FC<FlashcardGridProps> = ({ flashcards }) => {
