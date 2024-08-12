@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Stripe from "stripe";
 
 // Utility function for formatting the `unit_amount`
@@ -11,7 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2024-06-20",
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     {
       /* 
@@ -53,6 +53,30 @@ export async function POST(req: Request) {
     // TODO: Stripe specific error catching?
   } catch (error) {
     console.error("Error creating checkout session:", error);
+    return NextResponse.json(
+      { error: { message: (error as Error).message } },
+      { status: 500 }
+    );
+  }
+}
+
+// This GET route retrieves checkout session details based on the provided session ID.
+// It handles errors gracefully and returns appropriate JSON responses.
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  const searchParams = req.nextUrl.searchParams;
+  const session_id = searchParams.get("session_id");
+
+  try {
+    if (!session_id) {
+      throw new Error("Session ID is required");
+    }
+
+    const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
+
+    return NextResponse.json(checkoutSession);
+    // TODO: Stripe specific error checking?
+  } catch (error) {
+    console.error("Error retrieving checkout session:", error);
     return NextResponse.json(
       { error: { message: (error as Error).message } },
       { status: 500 }
