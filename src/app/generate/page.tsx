@@ -12,7 +12,27 @@ export default function Generate(): React.JSX.Element {
   const [flashcard, setFlashcard] = useState<Flashcard[]>([]);
 
   const handleSubmit = async (): Promise<void> => {
-    // Implement api call here
+    if (!text.trim()) {
+      alert("Please enter some text to generate flashcards.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        body: text,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate flashcards");
+      }
+
+      const data: Flashcard[] = await response.json();
+      setFlashcard(data);
+    } catch (error) {
+      console.error("Error generating flashcards:", error);
+      alert("An error occured while generating flashcards. Please try again.");
+    }
   };
 
   return (
