@@ -1,49 +1,47 @@
 import { doc, collection, getDoc, writeBatch } from "firebase/firestore";
 import db from "@/lib/firebase";
-import { FlashcardList } from "@/types/flashcardList";
-import { UserResource } from "@clerk/types";
-
-interface FlashcardSet {
-  name: string;
-  flashcards: FlashcardList;
-}
+import { FlashcardSetList, FlashcardSet } from "@/types/flashcardList";
 
 interface SaveFlashcardsParams {
+  userId: string;
   flashcardSet: FlashcardSet;
   handleCloseDialog: () => void;
   setSetName: (name: string) => void;
 }
 
 export const saveFlashcards = async ({
+  userId,
   flashcardSet,
   handleCloseDialog,
   setSetName,
 }: SaveFlashcardsParams): Promise<void> => {
-  const { name: setName, flashcards } = flashcardSet;
+  const { name: setName } = flashcardSet;
 
   if (!setName.trim()) {
     alert("Please enter a name for your flashcard set.");
   }
 
   try {
-    const userDocRef = doc(collection(db, "users"), user.id); // TODO: not sure how to handle passing this
+    const userDocRef = doc(collection(db, "users"), userId);
     const userDocSnap = await getDoc(userDocRef);
 
     const batch = writeBatch(db);
 
     if (userDocSnap.exists()) {
       const userData = userDocSnap.data();
-      const updatedSets = [
+      const updatedSets: FlashcardSetList = [
         ...(userData?.flashcardSets || []),
-        { name: setName },
+        { name: setName, flashcards: [] },
       ];
       batch.update(userDocRef, { flashcardSets: updatedSets });
     } else {
-      batch.set(userDocRef, { flashcardSets: [{ name: setName }] });
+      batch.set(userDocRef, {
+        flashcardSets: [{ name: setName, flashcards: [] }],
+      });
     }
 
     const setDocRef = doc(collection(userDocRef, "flashcardSets"), setName);
-    batch.set(setDocRef, { flashcards });
+    batch.set(setDocRef, flashcardSet);
 
     await batch.commit();
 

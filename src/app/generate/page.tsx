@@ -1,17 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
+import { useUser } from "@clerk/nextjs";
 import { Container, Box } from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";
 import TextInput from "../components/TextInput";
 import PrimaryButton from "../components/PrimaryButton";
-import FlashcardGrid from "../components/FlashcardGrid";
-import { FlashcardList } from "@/types/flashcardList";
+import GeneratedFlashcardsGrid from "../components/GeneratedFlashcardsGrid";
+import { FlashcardList, FlashcardSet } from "@/types/flashcardList";
 import { saveFlashcards } from "@/utils/saveFlashcards";
 import SaveFlashcardsButton from "../components/SaveFlashcardsButton";
 import SaveFlashcardsDialog from "../components/SaveFlashcardsDialog";
 
 export default function Generate(): React.JSX.Element {
+  const { user } = useUser();
   const [text, setText] = useState<string>("");
   const [flashcards, setFlashcards] = useState<FlashcardList>([]);
   const [setName, setSetName] = useState<string>("");
@@ -50,9 +52,17 @@ export default function Generate(): React.JSX.Element {
   };
 
   const handleSaveFlashCards = async (): Promise<void> => {
+    if (!user) {
+      alert("You must be signed in to save flashcards.");
+      return;
+    }
+    const newFlashcardSet: FlashcardSet = {
+      name: setName,
+      flashcards: flashcards,
+    };
     await saveFlashcards({
-      // TODO: figure out how to pass the User (UserResource from clerk/types) to saveFlashcards
-      flashcardSet: { name: setName, flashcards },
+      userId: user.id,
+      flashcardSet: newFlashcardSet,
       handleCloseDialog,
       setSetName,
     });
@@ -75,7 +85,7 @@ export default function Generate(): React.JSX.Element {
       </Box>
       {flashcards.length > 0 && (
         <>
-          <FlashcardGrid flashcards={flashcards} />
+          <GeneratedFlashcardsGrid flashcards={flashcards} />
           <SaveFlashcardsButton onClick={handleOpenDialog} />
         </>
       )}
