@@ -1,12 +1,7 @@
 import { doc, collection, getDoc, writeBatch } from "firebase/firestore";
 import db from "@/lib/firebase";
 import { FlashcardList } from "@/types/flashcardList";
-
-// TODO: redefine this when we do authentification
-// and handle references to it
-interface User {
-  id: string;
-}
+import { UserResource } from "@clerk/types";
 
 interface FlashcardSet {
   name: string;
@@ -14,14 +9,12 @@ interface FlashcardSet {
 }
 
 interface SaveFlashcardsParams {
-  user: User;
   flashcardSet: FlashcardSet;
   handleCloseDialog: () => void;
   setSetName: (name: string) => void;
 }
 
 export const saveFlashcards = async ({
-  user,
   flashcardSet,
   handleCloseDialog,
   setSetName,
@@ -33,7 +26,7 @@ export const saveFlashcards = async ({
   }
 
   try {
-    const userDocRef = doc(collection(db, "users"), user.id);
+    const userDocRef = doc(collection(db, "users"), user.id); // TODO: not sure how to handle passing this
     const userDocSnap = await getDoc(userDocRef);
 
     const batch = writeBatch(db);

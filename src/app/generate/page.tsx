@@ -51,7 +51,7 @@ export default function Generate(): React.JSX.Element {
 
   const handleSaveFlashCards = async (): Promise<void> => {
     await saveFlashcards({
-      user: { id: "user-id" }, // TODO: THIS IS A TEMPORARY PLACEHOLDER
+      // TODO: figure out how to pass the User (UserResource from clerk/types) to saveFlashcards
       flashcardSet: { name: setName, flashcards },
       handleCloseDialog,
       setSetName,
