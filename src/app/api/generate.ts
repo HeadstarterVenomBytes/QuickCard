@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
 import { ChatCompletionMessageParam } from "openai/src/resources/index.js";
-
-interface Flashcard {
-  front: string;
-  back: string;
-}
+import { Flashcard } from "@/types/flashcard";
 
 // TODO: switch this to use LangChain for prompts
 const systemPrompt = `
