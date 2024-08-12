@@ -7,10 +7,15 @@ import TextInput from "../components/TextInput";
 import PrimaryButton from "../components/PrimaryButton";
 import FlashcardGrid from "../components/FlashcardGrid";
 import { FlashcardList } from "@/types/flashcardList";
+import { saveFlashcards } from "@/utils/saveFlashcards";
+import SaveFlashcardsButton from "../components/SaveFlashcardsButton";
+import SaveFlashcardsDialog from "../components/SaveFlashcardsDialog";
 
 export default function Generate(): React.JSX.Element {
   const [text, setText] = useState<string>("");
   const [flashcards, setFlashcards] = useState<FlashcardList>([]);
+  const [setName, setSetName] = useState<string>("");
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const handleSubmit = async (): Promise<void> => {
     if (!text.trim()) {
@@ -36,6 +41,23 @@ export default function Generate(): React.JSX.Element {
     }
   };
 
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const handleSaveFlashCards = async (): Promise<void> => {
+    await saveFlashcards({
+      user: { id: "user-id" }, // TODO: THIS IS A TEMPORARY PLACEHOLDER
+      flashcardSet: { name: setName, flashcards },
+      handleCloseDialog,
+      setSetName,
+    });
+  };
+
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
@@ -51,7 +73,19 @@ export default function Generate(): React.JSX.Element {
           Generate Flashcards
         </PrimaryButton>
       </Box>
-      {flashcards.length > 0 && <FlashcardGrid flashcards={flashcards} />}
+      {flashcards.length > 0 && (
+        <>
+          <FlashcardGrid flashcards={flashcards} />
+          <SaveFlashcardsButton onClick={handleOpenDialog} />
+        </>
+      )}
+      <SaveFlashcardsDialog
+        open={dialogOpen}
+        setName={setName}
+        onSetNameChange={(e) => setSetName(e.target.value)}
+        onSave={handleSaveFlashCards}
+        onClose={handleCloseDialog}
+      />
     </Container>
   );
 }
