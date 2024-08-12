@@ -5,11 +5,12 @@ import { Container, Box } from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";
 import TextInput from "../components/TextInput";
 import PrimaryButton from "../components/PrimaryButton";
+import FlashcardGrid from "../components/FlashcardGrid";
 import { Flashcard } from "@/types/flashcard";
 
 export default function Generate(): React.JSX.Element {
   const [text, setText] = useState<string>("");
-  const [flashcard, setFlashcard] = useState<Flashcard[]>([]);
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
 
   const handleSubmit = async (): Promise<void> => {
     if (!text.trim()) {
@@ -28,7 +29,7 @@ export default function Generate(): React.JSX.Element {
       }
 
       const data: Flashcard[] = await response.json();
-      setFlashcard(data);
+      setFlashcards(data);
     } catch (error) {
       console.error("Error generating flashcards:", error);
       alert("An error occured while generating flashcards. Please try again.");
@@ -50,8 +51,7 @@ export default function Generate(): React.JSX.Element {
           Generate Flashcards
         </PrimaryButton>
       </Box>
-
-      {/* Add flashcard display here */}
+      {flashcards.length > 0 && <FlashcardGrid flashcards={flashcards} />}
     </Container>
   );
 }
