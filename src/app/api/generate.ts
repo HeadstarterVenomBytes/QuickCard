@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
-import { ChatCompletionMessageParam } from "openai/src/resources/index.js";
 import { FlashcardList } from "@/types/flashcardList";
 
 // TODO: switch this to use LangChain for prompts
@@ -27,14 +26,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const data = await req.text();
 
   // Define the conversation structure
-  const messages: ChatCompletionMessageParam[] = [
+  const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] =  [
     { role: "system", content: systemPrompt },
     { role: "user", content: data },
   ];
 
   // Create the OpenAI API request
   const completion = await client.chat.completions.create({
-    messages,
+    messages: messages,
     model: "meta-llama/llama-3.1-8b-instruct:free",
     response_format: { type: "json_object" }, // TODO: schema instead?
   });
