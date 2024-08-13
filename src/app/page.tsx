@@ -1,3 +1,5 @@
+"use client";
+
 import LandingPageAppBar from "./components/LandingPage/LandingPageBar";
 import HeroSection from "./components/LandingPage/HeroSection";
 import { Box, Grid } from "@mui/material";
