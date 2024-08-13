@@ -1,95 +1,60 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import LandingPageAppBar from "./components/LandingPage/LandingPageBar";
+import HeroSection from "./components/LandingPage/HeroSection";
+import { Box, Grid } from "@mui/material";
+import TypographyHeader from "./components/TypographyHeader";
+import getStripe from "@/utils/getStripe";
+import Stripe from "stripe";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export default function Home() {
+  // TODO: use this in the pricing plan grid
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("/api/checkout_sessions", {
+        method: "POST",
+        headers: { origin: "http://localhost:3000" },
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to create checkout session: ${response.statusText}`
+        );
+      }
+
+      const checkoutSessionJson: Stripe.Checkout.Session =
+        await response.json();
+
+      const stripe = await getStripe();
+      const result = await stripe?.redirectToCheckout({
+        sessionId: checkoutSessionJson.id,
+      });
+
+      if (result?.error) {
+        console.warn(result.error.message);
+      }
+    } catch (error) {
+      console.error("Error during checkout:", error);
+    }
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <ClerkProvider>
+      <LandingPageAppBar />
+      <HeroSection />
+      <Box sx={{ my: 6 }}>
+        <TypographyHeader title="Features" variant="h4" component="h2" />
+        <Grid container spacing={4}>
+          {/* Feature Items */}
+        </Grid>
+      </Box>
+      <Box sx={{ my: 6, textAlign: "center" }}>
+        <TypographyHeader title="Pricing" variant="h4" component="h2" />
+        <Grid container spacing={4} justifyContent="center">
+          {/* Pricing Plans */}
+        </Grid>
+      </Box>
+    </ClerkProvider>
   );
 }
