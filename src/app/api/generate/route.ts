@@ -19,13 +19,11 @@ You should return in the following JSON format:
 
 const client = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.NEXT_PUBLIC_OPENROUTER_API_KEY as string,
+  apiKey: process.env.OPENROUTER_API_KEY as string,
 });
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  console.log(req);
   const data = await req.text();
-  console.log(data);
 
   // Define the conversation structure
   const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
