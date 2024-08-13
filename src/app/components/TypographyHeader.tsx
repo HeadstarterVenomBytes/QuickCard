@@ -1,12 +1,25 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Typography, TypographyProps } from "@mui/material";
 
-interface TypographyHeaderProps {
+interface TypographyHeaderProps
+  extends Omit<TypographyProps, "variant" | "component"> {
   title: string;
+  variant?: TypographyProps["variant"];
+  component?: TypographyProps["component"];
 }
 
-const TypographyHeader: React.FC<TypographyHeaderProps> = ({ title }) => (
-  <Typography variant="h4" component="h4" gutterBottom>
+const TypographyHeader: React.FC<TypographyHeaderProps> = ({
+  title,
+  variant = "h4",
+  component = "h4",
+  ...otherProps
+}) => (
+  <Typography
+    variant={variant}
+    component={component}
+    gutterBottom
+    {...otherProps}
+  >
     {title}
   </Typography>
 );
