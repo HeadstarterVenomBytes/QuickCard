@@ -23,10 +23,12 @@ const client = new OpenAI({
 });
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
+  console.log(req);
   const data = await req.text();
+  console.log(data);
 
   // Define the conversation structure
-  const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] =  [
+  const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
     { role: "system", content: systemPrompt },
     { role: "user", content: data },
   ];
