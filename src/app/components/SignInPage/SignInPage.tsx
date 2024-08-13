@@ -2,9 +2,9 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { SignIn } from "@clerk/nextjs";
 
-interface SignInSectionProps {}
+interface SignInPageProps {}
 
-const SignInSection: React.FC<SignInSectionProps> = ({}) => {
+const SignInPage: React.FC<SignInPageProps> = ({}) => {
   return (
     <Box
       display="flex"
@@ -20,3 +20,5 @@ const SignInSection: React.FC<SignInSectionProps> = ({}) => {
     </Box>
   );
 };
+
+export default SignInPage;
