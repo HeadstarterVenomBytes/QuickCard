@@ -32,7 +32,7 @@ export default function Generate(): React.JSX.Element {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to generate flashcards");
+        throw new Error("Network response was not ok");
       }
 
       const data: FlashcardList = await response.json();
