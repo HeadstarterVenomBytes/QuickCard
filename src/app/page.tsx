@@ -5,6 +5,7 @@ import HeroSection from "./components/LandingPage/HeroSection";
 import { Box, Grid } from "@mui/material";
 import TypographyHeader from "./components/TypographyHeader";
 import getStripe from "@/utils/getStripe";
+import Stripe from "stripe";
 
 export default function Home() {
   // TODO: use this in the pricing plan grid
@@ -21,8 +22,8 @@ export default function Home() {
         );
       }
 
-      // TODO: make sure this is type checked
-      const checkoutSessionJson = await response.json();
+      const checkoutSessionJson: Stripe.Checkout.Session =
+        await response.json();
 
       const stripe = await getStripe();
       const result = await stripe?.redirectToCheckout({
