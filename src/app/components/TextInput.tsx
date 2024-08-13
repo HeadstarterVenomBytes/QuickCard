@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField } from "@mui/material";
+import { Paper, TextField } from "@mui/material";
 
 interface TextInputProps {
   value: string;
@@ -16,16 +16,18 @@ const TextInput: React.FC<TextInputProps> = ({
   multiline = false,
   rows = 1,
 }) => (
-  <TextField
-    value={value}
-    onChange={onChange}
-    label={label}
-    fullWidth
-    multiline={multiline}
-    rows={rows}
-    variant="outlined"
-    sx={{ mb: 2 }}
-  />
+  <Paper elevation={1}>
+    <TextField
+      value={value}
+      onChange={onChange}
+      label={label}
+      fullWidth
+      multiline={multiline}
+      rows={rows}
+      variant="outlined"
+      sx={{ mb: 2 }}
+    />
+  </Paper>
 );
 
 export default TextInput;
