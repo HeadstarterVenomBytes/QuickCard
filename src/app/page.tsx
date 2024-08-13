@@ -6,7 +6,8 @@ import { Box, Grid } from "@mui/material";
 import TypographyHeader from "./components/TypographyHeader";
 import getStripe from "@/utils/getStripe";
 import Stripe from "stripe";
-import { ClerkProvider } from "@clerk/nextjs";
+
+// Development
 
 export default function Home() {
   // TODO: use this in the pricing plan grid
@@ -40,7 +41,7 @@ export default function Home() {
   };
 
   return (
-    <ClerkProvider>
+    <>
       <LandingPageAppBar />
       <HeroSection />
       <Box sx={{ my: 6 }}>
@@ -55,6 +56,6 @@ export default function Home() {
           {/* Pricing Plans */}
         </Grid>
       </Box>
-    </ClerkProvider>
+    </>
   );
 }
