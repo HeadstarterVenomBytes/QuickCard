@@ -8,6 +8,8 @@ import getStripe from "@/utils/getStripe";
 import Stripe from "stripe";
 import { ClerkProvider } from "@clerk/nextjs";
 
+// Development
+
 export default function Home() {
   // TODO: use this in the pricing plan grid
   const handleSubmit = async () => {
