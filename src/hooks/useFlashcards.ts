@@ -5,6 +5,7 @@ import db from "@/lib/firebase";
 import { FlashcardList } from "@/types/flashcardList";
 import { Flashcard } from "@/types/flashcard";
 
+// TODO: move to utils maybe?
 function useFlashcards(setId: string | null) {
   const { user } = useUser();
   const [flashcards, setFlashcards] = useState<FlashcardList>([]);
