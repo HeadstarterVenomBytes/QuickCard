@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
 import { doc, collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { FlashcardList, FirestoreFlashcard } from "@/types/flashcard-types";
+import { useFirebaseAuth } from "@/app/context/FirebaseAuthContext";
 
-// TODO: move to utils maybe?
 function useFlashcards(setId: string | null) {
-  const { user } = useUser();
+  const { firebaseUser, loading } = useFirebaseAuth();
   const [flashcards, setFlashcards] = useState<
     FlashcardList<FirestoreFlashcard>
   >([]);
 
   useEffect(() => {
     async function fetchFlashcards() {
-      if (!setId || !user) return; // TODO: better error handling
+      if (loading) return;
+      if (!setId || !firebaseUser) return; // TODO: better error handling
 
       const flashcardSetRef = collection(
-        doc(collection(db, "users"), user.id),
+        doc(collection(db, "users"), firebaseUser.uid),
         "flashcardSets"
       );
       const setDocRef = doc(flashcardSetRef, setId);
@@ -36,7 +36,7 @@ function useFlashcards(setId: string | null) {
     }
 
     fetchFlashcards();
-  }, [setId, user]);
+  }, [setId, firebaseUser, loading]);
 
   return flashcards;
 }
