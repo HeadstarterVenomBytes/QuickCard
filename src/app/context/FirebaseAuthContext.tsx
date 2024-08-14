@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuth as useClerkAuth } from "@clerk/nextjs";
 import { User as FirebaseUser, signInWithCustomToken } from "firebase/auth";
