@@ -1,10 +1,13 @@
 import { Flashcard } from "./flashcard";
 
-export type FlashcardList = Flashcard[];
+// Generic FlashcardList
+export type FlashcardList<T extends Flashcard> = T[];
 
-export interface FlashcardSet {
+// Generic FlashcardSet
+export interface FlashcardSet<T extends Flashcard> {
   name: string;
-  flashcards: FlashcardList;
+  flashcards: FlashcardList<T>;
 }
 
-export type FlashcardSetList = FlashcardSet[];
+// Generic FlashcardSetList
+export type FlashcardSetList<T extends Flashcard> = FlashcardSet<T>[];
