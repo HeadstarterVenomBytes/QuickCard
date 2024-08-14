@@ -1,10 +1,14 @@
 import { doc, collection, getDoc, writeBatch } from "firebase/firestore";
 import db from "@/lib/firebase";
-import { FlashcardSetList, FlashcardSet } from "@/types/flashcardList";
+import {
+  Flashcard,
+  FlashcardSet,
+  FlashcardSetList,
+} from "@/types/flashcard-types";
 
 interface SaveFlashcardsParams {
   userId: string;
-  flashcardSet: FlashcardSet;
+  flashcardSet: FlashcardSet<Flashcard>;
   handleCloseDialog: () => void;
   setSetName: (name: string) => void;
 }
@@ -29,7 +33,7 @@ export const saveFlashcards = async ({
 
     if (userDocSnap.exists()) {
       const userData = userDocSnap.data();
-      const updatedSets: FlashcardSetList = [
+      const updatedSets: FlashcardSetList<Flashcard> = [
         ...(userData?.flashcardSets || []),
         { name: setName, flashcards: [] },
       ];
@@ -41,7 +45,16 @@ export const saveFlashcards = async ({
     }
 
     const setDocRef = doc(collection(userDocRef, "flashcardSets"), setName);
-    batch.set(setDocRef, flashcardSet);
+    batch.set(setDocRef, { name: setName });
+
+    // Save individual flashcards
+    flashcardSet.flashcards.forEach((flashcard, index) => {
+      const flashcardDocRef = doc(collection(setDocRef, "flashcards"));
+      batch.set(flashcardDocRef, {
+        front: flashcard.front,
+        back: flashcard.back,
+      });
+    });
 
     await batch.commit();
 

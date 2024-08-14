@@ -1,11 +1,11 @@
 import React from "react";
 import { Grid, Container } from "@mui/material";
 import { FlippedState } from "@/types/flashcardFlipState";
-import { FlashcardList } from "@/types/flashcardList";
+import { FlashcardList, FirestoreFlashcard } from "@/types/flashcard-types";
 import FlashcardComponent from "./FlashcardComponent";
 
 interface RenderedFlashcardGridProps {
-  flashcards: FlashcardList;
+  flashcards: FlashcardList<FirestoreFlashcard>;
   flipped: FlippedState;
   handleCardClick: (id: string) => void;
 }

@@ -1,32 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
-import { FlashcardList } from "@/types/flashcardList";
+import { Flashcard, FlashcardList } from "@/types/flashcard-types";
 
 // TODO: switch this to use LangChain for prompts
 const systemPrompt = `
-You are a flashcard creator, you take in text and create multiple flashcards from it. Make sure to create exactly 10 flashcards.
-Both front and back should be one sentence long.
-You should return in the following JSON format:
+You are a flashcard creator. Your task is to take in text and create exactly 10 flashcards from it. Both the front and back of each card should be one sentence long. 
+
+Your response must consist solely of a JSON object in the following format, with no additional text before or after:
+
 {
-  "flashcards":[
+  "flashcards": [
     {
-      "front": "Front of the card",
-      "back": "Back of the card"
-    }
+      "front": "Front of card 1",
+      "back": "Back of card 1"
+    },
+    {
+      "front": "Front of card 2",
+      "back": "Back of card 2"
+    },
+    ...
   ]
 }
+
+Ensure that your response contains exactly 10 flashcard objects within the "flashcards" array.
 `;
 
 const client = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.NEXT_PUBLIC_OPENROUTER_API_KEY as string,
+  apiKey: process.env.OPENROUTER_API_KEY as string,
 });
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const data = await req.text();
 
   // Define the conversation structure
-  const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] =  [
+  const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
     { role: "system", content: systemPrompt },
     { role: "user", content: data },
   ];
@@ -39,7 +47,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   });
 
   // Parse and extract flashcards
-  const flashcardsData: { flashcards: FlashcardList } = JSON.parse(
+  const flashcardsData: { flashcards: FlashcardList<Flashcard> } = JSON.parse(
     completion.choices[0]?.message?.content as string
   );
 

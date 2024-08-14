@@ -7,7 +7,11 @@ import TypographyHeader from "../components/TypographyHeader";
 import TextInput from "../components/TextInput";
 import PrimaryButton from "../components/PrimaryButton";
 import GeneratedFlashcardsGrid from "../components/GeneratedFlashcardsGrid";
-import { FlashcardList, FlashcardSet } from "@/types/flashcardList";
+import {
+  Flashcard,
+  FlashcardList,
+  FlashcardSet,
+} from "@/types/flashcard-types";
 import { saveFlashcards } from "@/utils/saveFlashcards";
 import SaveFlashcardsButton from "../components/SaveFlashcardsButton";
 import SaveFlashcardsDialog from "../components/SaveFlashcardsDialog";
@@ -15,7 +19,7 @@ import SaveFlashcardsDialog from "../components/SaveFlashcardsDialog";
 export default function Generate(): React.JSX.Element {
   const { user } = useUser();
   const [text, setText] = useState<string>("");
-  const [flashcards, setFlashcards] = useState<FlashcardList>([]);
+  const [flashcards, setFlashcards] = useState<FlashcardList<Flashcard>>([]);
   const [setName, setSetName] = useState<string>("");
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
@@ -32,10 +36,10 @@ export default function Generate(): React.JSX.Element {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to generate flashcards");
+        throw new Error("Network response was not ok");
       }
 
-      const data: FlashcardList = await response.json();
+      const data: FlashcardList<Flashcard> = await response.json();
       setFlashcards(data);
     } catch (error) {
       console.error("Error generating flashcards:", error);
@@ -56,7 +60,7 @@ export default function Generate(): React.JSX.Element {
       alert("You must be signed in to save flashcards.");
       return;
     }
-    const newFlashcardSet: FlashcardSet = {
+    const newFlashcardSet: FlashcardSet<Flashcard> = {
       name: setName,
       flashcards: flashcards,
     };
