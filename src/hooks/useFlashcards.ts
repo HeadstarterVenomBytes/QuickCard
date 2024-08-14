@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { doc, collection, getDocs } from "firebase/firestore";
-import db from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import { FlashcardList, FirestoreFlashcard } from "@/types/flashcard-types";
 
 // TODO: move to utils maybe?

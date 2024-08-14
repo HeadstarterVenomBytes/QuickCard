@@ -1,5 +1,5 @@
 import { doc, getDoc, setDoc, collection } from "firebase/firestore";
-import db from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import { UserResource } from "@clerk/types";
 import {
   FlashcardSetList,
