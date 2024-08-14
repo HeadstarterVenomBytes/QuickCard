@@ -6,10 +6,10 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import { FlashcardList } from "@/types/flashcardList";
+import { Flashcard, FlashcardList } from "@/types/flashcard-types";
 
 interface GeneratedFlashcardsGrid {
-  flashcards: FlashcardList;
+  flashcards: FlashcardList<Flashcard>;
 }
 
 const GeneratedFlashcardsGrid: React.FC<GeneratedFlashcardsGrid> = ({

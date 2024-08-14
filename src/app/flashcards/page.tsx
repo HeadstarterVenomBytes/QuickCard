@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
-import { FlashcardSetList } from "@/types/flashcardList";
+import { AnyFlashcard, FlashcardSetList } from "@/types/flashcard-types";
 import { useRouter } from "next/router";
 import { getFlashcardSets } from "@/utils/getFlashcards";
 import FlashcardSetsOverviewGrid from "../components/FlashcardSetsOverviewGrid";
@@ -12,7 +12,9 @@ import Container from "@mui/material/Container";
 // TODO: maybe use `React.FC<type stuff>` for stricter typing
 export default function Flashcard(): React.JSX.Element {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [flashcardSets, setFlashcardSets] = useState<FlashcardSetList>([]);
+  const [flashcardSets, setFlashcardSets] = useState<
+    FlashcardSetList<AnyFlashcard>
+  >([]);
   const router = useRouter();
 
   useEffect(() => {

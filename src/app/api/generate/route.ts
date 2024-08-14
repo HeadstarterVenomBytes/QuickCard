@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
-import { FlashcardList } from "@/types/flashcardList";
+import { Flashcard, FlashcardList } from "@/types/flashcard-types";
 
 // TODO: switch this to use LangChain for prompts
 const systemPrompt = `
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   });
 
   // Parse and extract flashcards
-  const flashcardsData: { flashcards: FlashcardList } = JSON.parse(
+  const flashcardsData: { flashcards: FlashcardList<Flashcard> } = JSON.parse(
     completion.choices[0]?.message?.content as string
   );
 

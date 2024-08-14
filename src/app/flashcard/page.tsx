@@ -5,7 +5,6 @@ import { useUser } from "@clerk/nextjs";
 import useFlashcards from "@/hooks/useFlashcards";
 import RenderedFlashcardGrid from "../components/RenderedFlashcardGrid";
 import { FlippedState } from "@/types/flashcardFlipState";
-import { FlashcardList } from "@/types/flashcardList";
 import { useSearchParams } from "next/navigation";
 import { Container } from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";

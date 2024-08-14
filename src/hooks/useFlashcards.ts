@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { doc, collection, getDocs } from "firebase/firestore";
 import db from "@/lib/firebase";
-import { FlashcardList } from "@/types/flashcardList";
-import { Flashcard } from "@/types/flashcard";
+import { FlashcardList, FirestoreFlashcard } from "@/types/flashcard-types";
 
 // TODO: move to utils maybe?
 function useFlashcards(setId: string | null) {
   const { user } = useUser();
-  const [flashcards, setFlashcards] = useState<FlashcardList>([]);
+  const [flashcards, setFlashcards] = useState<
+    FlashcardList<FirestoreFlashcard>
+  >([]);
 
   useEffect(() => {
     async function fetchFlashcards() {
@@ -21,10 +22,14 @@ function useFlashcards(setId: string | null) {
       const setDocRef = doc(flashcardSetRef, setId);
       const flashcardsCol = collection(setDocRef, "flaschards");
       const docs = await getDocs(flashcardsCol);
-      const fetchedFlashcards: FlashcardList = [];
+      const fetchedFlashcards: FlashcardList<FirestoreFlashcard> = [];
 
       docs.forEach((doc) => {
-        fetchedFlashcards.push({ id: doc.id, ...doc.data() } as Flashcard);
+        fetchedFlashcards.push({
+          id: doc.id,
+          front: doc.data().front as string,
+          back: doc.data().back as string,
+        } as FirestoreFlashcard);
       });
 
       setFlashcards(fetchedFlashcards);

@@ -1,10 +1,10 @@
 import React from "react";
-import { FlashcardSetList } from "@/types/flashcardList";
+import { Flashcard, FlashcardSetList } from "@/types/flashcard-types";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 
 interface FlashcardSetsOverviewGridProps {
-  flashcardSets: FlashcardSetList;
+  flashcardSets: FlashcardSetList<Flashcard>;
   onSetClick: (id: string) => void;
 }
 

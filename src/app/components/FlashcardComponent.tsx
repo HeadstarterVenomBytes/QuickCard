@@ -6,7 +6,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { Flashcard } from "@/types/flashcard";
+import { Flashcard } from "@/types/flashcard-types";
 
 interface FlashcardComponentProps {
   flashcard: Flashcard;

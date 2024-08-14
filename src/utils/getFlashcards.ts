@@ -1,11 +1,15 @@
 import { doc, getDoc, setDoc, collection } from "firebase/firestore";
 import db from "@/lib/firebase";
 import { UserResource } from "@clerk/types";
-import { FlashcardSetList, FlashcardSet } from "@/types/flashcardList";
+import {
+  FlashcardSetList,
+  FlashcardSet,
+  FirestoreFlashcard,
+} from "@/types/flashcard-types";
 
 export async function getFlashcardSets(
   user: UserResource | null
-): Promise<FlashcardSetList> {
+): Promise<FlashcardSetList<FirestoreFlashcard>> {
   if (!user) return [];
 
   const userDocRef = doc(collection(db, "users"), user.id);
@@ -15,6 +19,7 @@ export async function getFlashcardSets(
     const userData = userDocSnap.data();
     const flashcardSets = userData.flashcardSets || [];
 
+    // This can be more robust
     // Fetch full flashcard sets
     const fullSets = await Promise.all(
       flashcardSets.map(async (set: { name: string }) => {
@@ -24,7 +29,7 @@ export async function getFlashcardSets(
         );
         const setDocSnap = await getDoc(setDocRef);
         if (setDocSnap.exists()) {
-          return setDocSnap.data() as FlashcardSet;
+          return setDocSnap.data() as FlashcardSet<FirestoreFlashcard>;
         }
         return { name: set.name, flashcards: [] };
       })
