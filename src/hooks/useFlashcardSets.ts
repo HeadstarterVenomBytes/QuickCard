@@ -8,10 +8,15 @@ import {
 } from "@/types/flashcard-types";
 import { useFirebaseAuth } from "@/app/context/FirebaseAuthContext";
 
-export function useFlashcardSets() {
+export function useFlashcardSets(): {
+  flashcardSets: FlashcardSetList<FirestoreFlashcard>;
+  isLoading: boolean;
+  error: Error | null;
+} {
   const { firebaseUser, loading } = useFirebaseAuth();
-  const [flashcardSets, setFlashcardSets] =
-    useState<FlashcardSetList<FirestoreFlashcard>>();
+  const [flashcardSets, setFlashcardSets] = useState<
+    FlashcardSetList<FirestoreFlashcard>
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
