@@ -14,12 +14,12 @@ const SignInNavigationBar: React.FC<SignInNavigationBarProps> = () => {
           <Button href="/" color="inherit" > QuickCard SaaS </Button>
         </Typography>
         <Button color="inherit">
-          <Link href="/login" passHref>
+          <Link href="/sign-in" passHref>
             Login
           </Link>
         </Button>
         <Button color="inherit">
-          <Link href="/sign-in" passHref>
+          <Link href="/sign-up" passHref>
             Sign Up
           </Link>
         </Button>
