@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useUser } from "@clerk/nextjs";
 import { Container, Box } from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";
 import TextInput from "../components/TextInput";
@@ -12,16 +11,16 @@ import {
   FlashcardList,
   FlashcardSet,
 } from "@/types/flashcard-types";
-import { saveFlashcards } from "@/utils/saveFlashcards";
+import { useSaveFlashcards } from "@/hooks/useSaveFlashcards";
 import SaveFlashcardsButton from "../components/SaveFlashcardsButton";
 import SaveFlashcardsDialog from "../components/SaveFlashcardsDialog";
 
 export default function Generate(): React.JSX.Element {
-  const { user } = useUser();
   const [text, setText] = useState<string>("");
   const [flashcards, setFlashcards] = useState<FlashcardList<Flashcard>>([]);
   const [setName, setSetName] = useState<string>("");
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const { saveFlashcards, isLoading, error } = useSaveFlashcards();
 
   const handleSubmit = async (): Promise<void> => {
     if (!text.trim()) {
@@ -56,22 +55,25 @@ export default function Generate(): React.JSX.Element {
   };
 
   const handleSaveFlashCards = async (): Promise<void> => {
-    if (!user) {
-      alert("You must be signed in to save flashcards.");
-      return;
-    }
     const newFlashcardSet: FlashcardSet<Flashcard> = {
       name: setName,
       flashcards: flashcards,
     };
+
     await saveFlashcards({
-      userId: user.id,
       flashcardSet: newFlashcardSet,
-      handleCloseDialog,
-      setSetName,
+      onSuccess: () => {
+        alert("Flashcards saved successfully!");
+        handleCloseDialog();
+        setSetName("");
+      },
+      onError: (errorMessage) => {
+        alert(errorMessage);
+      },
     });
   };
 
+  // TODO: style the error thing
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
@@ -100,6 +102,7 @@ export default function Generate(): React.JSX.Element {
         onSave={handleSaveFlashCards}
         onClose={handleCloseDialog}
       />
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </Container>
   );
 }
