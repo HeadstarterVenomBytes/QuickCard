@@ -20,7 +20,7 @@ function useFlashcards(setId: string | null) {
         "flashcardSets"
       );
       const setDocRef = doc(flashcardSetRef, setId);
-      const flashcardsCol = collection(setDocRef, "flaschards");
+      const flashcardsCol = collection(setDocRef, "flashcards");
       const docs = await getDocs(flashcardsCol);
       const fetchedFlashcards: FlashcardList<FirestoreFlashcard> = [];
 
@@ -33,10 +33,14 @@ function useFlashcards(setId: string | null) {
       });
 
       setFlashcards(fetchedFlashcards);
+      console.log(fetchedFlashcards)
     }
 
     fetchFlashcards();
+    
   }, [setId, firebaseUser, loading]);
+
+  console.log(flashcards)
 
   return flashcards;
 }
