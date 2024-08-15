@@ -14,13 +14,38 @@ interface FlashcardComponentProps {
   onClick: () => void;
 }
 
+/* Rectangle 112 */
+
+// position: absolute;
+// left: 3.21%;
+// right: 3.21%;
+// top: 10.42%;
+// bottom: 10.42%;
+
+// background: #003050;
+// box-shadow: 4px 4px 9px rgba(0, 0, 0, 0.25);
+// border-radius: 20px;
+
+
+
+
 const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
   flashcard,
   isFlipped,
   onClick,
 }) => {
   return (
-    <Card style={{ height:"100%" }}>
+    <Card style={{ 
+      height:"100%",
+      width: "100%",
+      left: "3.21%",
+      right: "3.21%",
+      top: "10.42%",
+      bottom: "10.42%",
+      background: "#003050",
+      boxShadow: "4px 4px 9px rgba(0, 0, 0, 0.25)",
+      borderRadius: "20px"
+     }}>
       <CardActionArea onClick={onClick}>
         <CardContent>
           <Box sx={{ perspective: 1000 }}>
@@ -39,7 +64,7 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
                   transform: "rotateY(0deg)",
                 }}
               >
-                <Typography variant="h5" component="div">
+                <Typography variant="h5" component="div" color="#FFFFFF">
                   {flashcard?.front}
                 </Typography>
               </Box>
@@ -51,7 +76,7 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
                   transform: "rotateY(180deg)",
                 }}
               >
-                <Typography variant="h5" component="div">
+                <Typography variant="h5" component="div" color="#FFFFFF">
                   {flashcard?.back}
                 </Typography>
               </Box>

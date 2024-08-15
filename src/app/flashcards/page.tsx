@@ -27,12 +27,13 @@ export default function Flashcard(): React.JSX.Element {
   }
 
   return (
-    <Container maxWidth="md" style={{ height:"100%" }}>
-      <TypographyHeader title="Your Flashcard Sets" />
+    <Container maxWidth="md" style={{ height:"50%" }}>
+      <TypographyHeader title="Recent Sets" />
       <FlashcardSetsOverviewGrid
         flashcardSets={flashcardSets || []}
         onSetClick={handleSetClick}
       />
+      <TypographyHeader title="Based On Your Interest" />
     </Container>
   );
 }
