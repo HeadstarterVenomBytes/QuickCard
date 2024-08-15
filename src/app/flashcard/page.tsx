@@ -3,13 +3,13 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import useFlashcards from "@/hooks/useFlashcards";
-import RenderedFlashcardGrid from "../components/RenderedFlashcardGrid";
+import RenderedFlashcardGrid from "../components/FlashCardPages/RenderedFlashcardGrid";
 import { FlippedState } from "@/types/flashcardFlipState";
 import { useSearchParams } from "next/navigation";
 import { Container } from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";
 
-export default function Flashcard(): React.JSX.Element {
+export default function FlashcardSet(): React.JSX.Element {
   const { isLoaded, isSignedIn, user } = useUser();
   const [flipped, setFlipped] = useState<FlippedState>({});
 

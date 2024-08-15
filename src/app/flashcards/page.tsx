@@ -4,12 +4,12 @@ import React, { useState, useEffect } from "react";
 import { AnyFlashcard, FlashcardSetList } from "@/types/flashcard-types";
 import { useRouter } from "next/navigation";
 import { useFlashcardSets } from "@/hooks/useFlashcardSets";
-import FlashcardSetsOverviewGrid from "../components/FlashcardSetsOverviewGrid";
+import FlashcardSetsOverviewGrid from "../components/FlashCardPages/FlashcardSetsOverviewGrid";
 import TypographyHeader from "../components/TypographyHeader";
 import Container from "@mui/material/Container";
 
 // TODO: maybe use `React.FC<type stuff>` for stricter typing
-export default function Flashcard(): React.JSX.Element {
+export default function FlashcardSets(): React.JSX.Element {
   const router = useRouter();
   const { flashcardSets, isLoading, error } = useFlashcardSets();
 

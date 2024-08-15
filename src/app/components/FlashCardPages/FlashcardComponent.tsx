@@ -6,26 +6,14 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { Flashcard } from "@/types/flashcard-types";
+import Link from "next/link";
+import { FirestoreFlashcard } from "@/types/flashcard-types";
 
 interface FlashcardComponentProps {
-  flashcard: Flashcard;
+  flashcard: FirestoreFlashcard;
   isFlipped: boolean;
   onClick: () => void;
 }
-
-/* Rectangle 112 */
-
-// position: absolute;
-// left: 3.21%;
-// right: 3.21%;
-// top: 10.42%;
-// bottom: 10.42%;
-
-// background: #003050;
-// box-shadow: 4px 4px 9px rgba(0, 0, 0, 0.25);
-// border-radius: 20px;
-
 
 
 
@@ -50,25 +38,25 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
         <CardContent>
           <Box sx={{ perspective: 1000 }}>
             <Box
-              sx={{
-                transformStyle: "preserve-3d",
-                transition: "transform 0.6s",
-                transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-              }}
+              // sx={{
+              //   transformStyle: "preserve-3d",
+              //   transition: "transform 0.6s",
+              //   transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+              // }}
             >
               <Box
                 sx={{
                   position: "absolute",
                   width: "100%",
                   backfaceVisibility: "hidden",
-                  transform: "rotateY(0deg)",
+                  // transform: "rotateY(0deg)",
                 }}
               >
                 <Typography variant="h5" component="div" color="#FFFFFF">
                   {flashcard?.front}
                 </Typography>
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   position: "absolute",
                   width: "100%",
@@ -79,7 +67,7 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
                 <Typography variant="h5" component="div" color="#FFFFFF">
                   {flashcard?.back}
                 </Typography>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
         </CardContent>

@@ -6,7 +6,7 @@ import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 
 interface FlashcardSetsOverviewGridProps {
   flashcardSets: FlashcardSetList<Flashcard>;
-  onSetClick: (id: string) => void;
+  onSetClick: (setid: string) => void;
 }
 
 const FlashcardSetsOverviewGrid: React.FC<FlashcardSetsOverviewGridProps> = ({
