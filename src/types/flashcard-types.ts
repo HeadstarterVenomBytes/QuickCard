@@ -1,3 +1,5 @@
+import { Difficulty, CardType } from "./flashcard-form-types";
+
 // Base Flashcard type
 export interface Flashcard {
   front: string;
@@ -17,6 +19,10 @@ export type FlashcardList<T extends Flashcard> = T[];
 export interface FlashcardSet<T extends Flashcard> {
   name: string;
   flashcards: FlashcardList<T>;
+  topic: string;
+  numberOfCards: number;
+  difficultyLevel: Difficulty;
+  cardType: CardType;
 }
 
 // Generic FlashcardSetList
