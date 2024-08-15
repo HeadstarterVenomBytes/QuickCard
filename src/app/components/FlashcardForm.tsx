@@ -35,7 +35,18 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        p: 3,
+        maxWidth: 600,
+        mx: "auto",
+        bgcolor: "background.paper",
+        borderRadius: 2,
+        boxShadow: 3,
+      }}
+    >
       <FormGroup>
         <FormControl fullWidth margin="normal" error={!errors.topic}>
           <TextField
