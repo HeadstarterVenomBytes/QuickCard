@@ -9,12 +9,12 @@ import TypographyHeader from "../components/TypographyHeader";
 import Container from "@mui/material/Container";
 
 // TODO: maybe use `React.FC<type stuff>` for stricter typing
-export default function FlashcardSets(): React.JSX.Element {
+export default function Flashcard(): React.JSX.Element {
   const router = useRouter();
   const { flashcardSets, isLoading, error } = useFlashcardSets();
 
   const handleSetClick = (id: string) => {
-    router.push(`/flashcard?id=${id}`);
+    router.push(`/flashcard?setid=${id}`);
   };
 
   // TODO: Style all of these with material UI

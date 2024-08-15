@@ -14,7 +14,7 @@ export default function FlashcardSet(): React.JSX.Element {
   const [flipped, setFlipped] = useState<FlippedState>({});
 
   const searchParams = useSearchParams();
-  const setId = searchParams.get("id");
+  const setId = searchParams.get("setid");
   const flashcards = useFlashcards(setId);
 
   // console.log(flashcards)
@@ -32,6 +32,7 @@ export default function FlashcardSet(): React.JSX.Element {
         flashcards={flashcards}
         flipped={flipped}
         handleCardClick={handleCardClick}
+        setId={setId}
       />
     </Container>
   );

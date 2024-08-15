@@ -13,6 +13,7 @@ interface FlashcardComponentProps {
   flashcard: FirestoreFlashcard;
   isFlipped: boolean;
   onClick: () => void;
+  setId: string | null;
 }
 
 

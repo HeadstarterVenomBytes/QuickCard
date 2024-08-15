@@ -31,16 +31,12 @@ function useFlashcards(setId: string | null) {
           back: doc.data().back as string,
         } as FirestoreFlashcard);
       });
-
       setFlashcards(fetchedFlashcards);
-      console.log(fetchedFlashcards)
     }
 
     fetchFlashcards();
     
   }, [setId, firebaseUser, loading]);
-
-  console.log(flashcards)
 
   return flashcards;
 }
