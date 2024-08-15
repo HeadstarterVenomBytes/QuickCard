@@ -30,7 +30,14 @@ export function useSaveFlashcards() {
       return;
     }
 
-    const { name: setName } = flashcardSet;
+    const {
+      name: setName,
+      topic,
+      numberOfCards,
+      difficultyLevel,
+      cardType,
+    } = flashcardSet;
+
     if (!setName.trim()) {
       setError("Please enter a name for your flashcard set.");
       onError?.("Please enter a name for your flashcard set.");
@@ -49,17 +56,39 @@ export function useSaveFlashcards() {
         const userData = userDocSnap.data();
         const updatedSets: FlashcardSetList<Flashcard> = [
           ...(userData?.flashcardSets || []),
-          { name: setName, flashcards: [] },
+          {
+            name: setName,
+            flashcards: [],
+            topic,
+            numberOfCards,
+            difficultyLevel,
+            cardType,
+          },
         ];
         batch.update(userDocRef, { flashcardSets: updatedSets });
       } else {
         batch.set(userDocRef, {
-          flashcardSets: [{ name: setName, flashcards: [] }],
+          flashcardSets: [
+            {
+              name: setName,
+              flashcards: [],
+              topic,
+              numberOfCards,
+              difficultyLevel,
+              cardType,
+            },
+          ],
         });
       }
 
       const setDocRef = doc(collection(userDocRef, "flashcardSets"), setName);
-      batch.set(setDocRef, { name: setName });
+      batch.set(setDocRef, {
+        name: setName,
+        topic,
+        numberOfCards,
+        difficultyLevel,
+        cardType,
+      });
 
       // Save individual flashcards
       flashcardSet.flashcards.forEach((flashcard) => {
