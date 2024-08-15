@@ -30,11 +30,11 @@ const GeneratedFlashcardsGrid: React.FC<GeneratedFlashcardsGrid> = ({
             <Card>
               <CardContent>
                 <Typography variant="h6">Front:</Typography>
-                <Typography>{flashcard.front}</Typography>
+                <Typography>{flashcard?.front}</Typography>
                 <Typography variant="h6" sx={{ mt: 2 }}>
                   Back:
                 </Typography>
-                <Typography>{flashcard.back}</Typography>
+                <Typography>{flashcard?.back}</Typography>
               </CardContent>
             </Card>
           </Grid>

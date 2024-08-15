@@ -40,7 +40,7 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
                 }}
               >
                 <Typography variant="h5" component="div">
-                  {flashcard.front}
+                  {flashcard?.front}
                 </Typography>
               </Box>
               <Box
@@ -52,7 +52,7 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
                 }}
               >
                 <Typography variant="h5" component="div">
-                  {flashcard.back}
+                  {flashcard?.back}
                 </Typography>
               </Box>
             </Box>

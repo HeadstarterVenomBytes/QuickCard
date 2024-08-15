@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Flashcard, FlashcardSetList } from "@/types/flashcard-types";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
@@ -17,13 +18,13 @@ const FlashcardSetsOverviewGrid: React.FC<FlashcardSetsOverviewGridProps> = ({
       {flashcardSets.map((set, index) => (
         <Grid xs={12} sm={6} md={4} key={index}>
           <Card>
-            <CardActionArea onClick={() => onSetClick(set.name)}>
+            <CardActionArea onClick={() => onSetClick(set?.name)}>
               <CardContent>
                 <Typography variant="h5" component="div">
-                  {set.name}
+                  {set?.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {set.flashcards.length} cards
+                  {set?.flashcards?.length}
                 </Typography>
               </CardContent>
             </CardActionArea>

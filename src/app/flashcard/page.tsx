@@ -17,6 +17,8 @@ export default function Flashcard(): React.JSX.Element {
   const setId = searchParams.get("id");
   const flashcards = useFlashcards(setId);
 
+  // console.log(flashcards)
+
   const handleCardClick = (id: string) => {
     setFlipped((prev) => ({
       ...prev,

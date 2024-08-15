@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { AnyFlashcard, FlashcardSetList } from "@/types/flashcard-types";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useFlashcardSets } from "@/hooks/useFlashcardSets";
 import FlashcardSetsOverviewGrid from "../components/FlashcardSetsOverviewGrid";
 import TypographyHeader from "../components/TypographyHeader";
