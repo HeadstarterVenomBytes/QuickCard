@@ -16,8 +16,8 @@ const RenderedFlashcardGrid: React.FC<RenderedFlashcardGridProps> = ({
   handleCardClick,
 }) => {
   return (
-    <Container maxWidth="md">
-      <Grid container spacing={3} sx={{ mt: 4 }}>
+    <Container maxWidth="md" style={{ height:"100%" }}>
+      <Grid container spacing={3} sx={{ mt: 4 }} style={{ height:"100%" }}>
         {flashcards?.map((flashcard) => (
           <Grid item xs={12} sm={6} md={4} key={flashcard?.id}>
             <FlashcardComponent

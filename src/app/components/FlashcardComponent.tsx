@@ -20,7 +20,7 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
   onClick,
 }) => {
   return (
-    <Card>
+    <Card style={{ height:"100%" }}>
       <CardActionArea onClick={onClick}>
         <CardContent>
           <Box sx={{ perspective: 1000 }}>

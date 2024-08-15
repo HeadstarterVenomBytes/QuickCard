@@ -27,7 +27,7 @@ export default function Flashcard(): React.JSX.Element {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" style={{ height:"100%" }}>
       <TypographyHeader title="Flashcard Set" />
       <RenderedFlashcardGrid
         flashcards={flashcards}

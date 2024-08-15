@@ -14,7 +14,7 @@ const FlashcardSetsOverviewGrid: React.FC<FlashcardSetsOverviewGridProps> = ({
   onSetClick,
 }) => {
   return (
-    <Grid container spacing={3} sx={{ mt: 2 }}>
+    <Grid container spacing={3} sx={{ mt: 2 }} style={{ height:"100%" }}>
       {flashcardSets.map((set, index) => (
         <Grid xs={12} sm={6} md={4} key={index}>
           <Card>
