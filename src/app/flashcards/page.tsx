@@ -8,7 +8,6 @@ import FlashcardSetsOverviewGrid from "../components/FlashCardPages/FlashcardSet
 import TypographyHeader from "../components/TypographyHeader";
 import Container from "@mui/material/Container";
 
-// TODO: maybe use `React.FC<type stuff>` for stricter typing
 export default function Flashcard(): React.JSX.Element {
   const router = useRouter();
   const { flashcardSets, isLoading, error } = useFlashcardSets();
@@ -27,7 +26,7 @@ export default function Flashcard(): React.JSX.Element {
   }
 
   return (
-    <Container maxWidth="md" style={{ height:"50%" }}>
+    <Container maxWidth="lg">
       <TypographyHeader title="Recent Sets" />
       <FlashcardSetsOverviewGrid
         flashcardSets={flashcardSets || []}
