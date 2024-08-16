@@ -1,48 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import { OpenAI } from "openai";
-import { FlashcardList } from "@/types/flashcardList";
-
-// TODO: switch this to use LangChain for prompts
-const systemPrompt = `
-You are a flashcard creator, you take in text and create multiple flashcards from it. Make sure to create exactly 10 flashcards.
-Both front and back should be one sentence long.
-You should return in the following JSON format:
-{
-  "flashcards":[
-    {
-      "front": "Front of the card",
-      "back": "Back of the card"
-    }
-  ]
-}
-`;
-
-const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY as string,
-});
+import { Flashcard, FlashcardList } from "@/types/flashcard-types";
+import { generateFlashcards } from "@/utils/generateFlashcardData";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  const data = await req.text();
+  try {
+    const formData: string = await req.text();
 
-  // Define the conversation structure
-  const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
-    { role: "system", content: systemPrompt },
-    { role: "user", content: data },
-  ];
+    const flashcardList: FlashcardList<Flashcard> = await generateFlashcards(
+      formData
+    );
 
-  // Create the OpenAI API request
-  const completion = await client.chat.completions.create({
-    messages: messages,
-    model: "meta-llama/llama-3.1-8b-instruct:free",
-    response_format: { type: "json_object" }, // TODO: schema instead?
-  });
-
-  // Parse and extract flashcards
-  const flashcardsData: { flashcards: FlashcardList } = JSON.parse(
-    completion.choices[0]?.message?.content as string
-  );
-
-  // Return the flashcards as a JSON response
-  return NextResponse.json(flashcardsData.flashcards);
+    return NextResponse.json(flashcardList);
+  } catch (error) {
+    console.error("Error generating flashcards:", error);
+    return NextResponse.json(
+      { error: "Error generating flashcards" },
+      { status: 500 }
+    );
+  }
 }

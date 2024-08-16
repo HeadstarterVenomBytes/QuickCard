@@ -1,37 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
 import { doc, collection, getDocs } from "firebase/firestore";
-import db from "@/lib/firebase";
-import { FlashcardList } from "@/types/flashcardList";
-import { Flashcard } from "@/types/flashcard";
+import { db } from "@/lib/firebase";
+import { FlashcardList, FirestoreFlashcard } from "@/types/flashcard-types";
+import { useFirebaseAuth } from "@/app/context/FirebaseAuthContext";
 
-// TODO: move to utils maybe?
 function useFlashcards(setId: string | null) {
-  const { user } = useUser();
-  const [flashcards, setFlashcards] = useState<FlashcardList>([]);
+  const { firebaseUser, loading } = useFirebaseAuth();
+  const [flashcards, setFlashcards] = useState<
+    FlashcardList<FirestoreFlashcard>
+  >([]);
 
   useEffect(() => {
     async function fetchFlashcards() {
-      if (!setId || !user) return; // TODO: better error handling
+      if (loading) return;
+      if (!setId || !firebaseUser) return; // TODO: better error handling
 
       const flashcardSetRef = collection(
-        doc(collection(db, "users"), user.id),
+        doc(collection(db, "users"), firebaseUser.uid),
         "flashcardSets"
       );
       const setDocRef = doc(flashcardSetRef, setId);
-      const flashcardsCol = collection(setDocRef, "flaschards");
+      const flashcardsCol = collection(setDocRef, "flashcards");
       const docs = await getDocs(flashcardsCol);
-      const fetchedFlashcards: FlashcardList = [];
+      const fetchedFlashcards: FlashcardList<FirestoreFlashcard> = [];
 
       docs.forEach((doc) => {
-        fetchedFlashcards.push({ id: doc.id, ...doc.data() } as Flashcard);
+        fetchedFlashcards.push({
+          id: doc.id,
+          front: doc.data().front as string,
+          back: doc.data().back as string,
+        } as FirestoreFlashcard);
       });
-
       setFlashcards(fetchedFlashcards);
     }
 
     fetchFlashcards();
-  }, [setId, user]);
+    
+  }, [setId, firebaseUser, loading]);
 
   return flashcards;
 }

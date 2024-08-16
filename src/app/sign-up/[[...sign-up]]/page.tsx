@@ -1,12 +1,12 @@
 import React from "react";
 import SignInNavigationBar from "@/app/components/SignInPage/NavigationBar";
-import SignInPage from "@/app/components/SignInPage/SignInPage";
+import SignUpPage from "@/app/components/SignUpPage/SignUpPage";
 
-export default function UserAuthSignInPage(): React.JSX.Element {
+export default function UserAuthSigUpPage(): React.JSX.Element {
   return (
     <>
       <SignInNavigationBar />
-      <SignInPage />
+      <SignUpPage />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { AppBar, Toolbar, Button } from "@mui/material";
-import TypographyHeader from "../TypographyHeader";
+import { Typography } from "@mui/material";
 import Link from "next/link";
 
 interface SignInNavigationBarProps {}
@@ -10,14 +10,17 @@ const SignInNavigationBar: React.FC<SignInNavigationBarProps> = () => {
   return (
     <AppBar position="static" sx={{ backgroundColor: "#3f51b5" }}>
       <Toolbar>
-        <TypographyHeader
-          title="QuickCard SaaS"
-          variant="h6"
-          sx={{ flexGrow: 1 }}
-        />
+      <Typography variant="h6" style={{ flexGrow: 1 }}>
+          <Button href="/" color="inherit" > QuickCard SaaS </Button>
+        </Typography>
         <Button color="inherit">
-          <Link href="/login" passHref>
+          <Link href="/sign-in" passHref>
             Login
+          </Link>
+        </Button>
+        <Button color="inherit">
+          <Link href="/sign-up" passHref>
+            Sign Up
           </Link>
         </Button>
       </Toolbar>
