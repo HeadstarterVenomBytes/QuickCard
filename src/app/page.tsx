@@ -2,7 +2,7 @@
 
 import LandingPageAppBar from "./components/LandingPage/LandingPageBar";
 import HeroSection from "./components/LandingPage/HeroSection";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Container, Card, CardContent, Divider } from "@mui/material";
 import TypographyHeader from "./components/TypographyHeader";
 import getStripe from "@/utils/getStripe";
 import Stripe from "stripe";
@@ -44,18 +44,25 @@ export default function Home() {
     <>
       <LandingPageAppBar />
       <HeroSection />
-      <Box sx={{ my: 6 }}>
-        <TypographyHeader title="Features" variant="h4" component="h2" />
-        <Grid container spacing={4}>
-          {/* Feature Items */}
-        </Grid>
-      </Box>
-      <Box sx={{ my: 6, textAlign: "center" }}>
-        <TypographyHeader title="Pricing" variant="h4" component="h2" />
-        <Grid container spacing={4} justifyContent="center">
-          {/* Pricing Plans */}
-        </Grid>
-      </Box>
+      <Container maxWidth="lg" sx={{ my: 6 }}>
+        <Card>
+          <CardContent>
+            <TypographyHeader title="Features" variant="h4" component="h2" />
+            <Grid container spacing={4}>
+              {/* Feature Items */}
+            </Grid>
+          </CardContent>
+        </Card>
+        <Divider sx={{ my: 6 }} />
+        <Card>
+          <CardContent sx={{ textAlign: "center" }}>
+            <TypographyHeader title="Pricing" variant="h4" component="h2" />
+            <Grid container spacing={4} justifyContent="center">
+              {/* Pricing Plans */}
+            </Grid>
+          </CardContent>
+        </Card>
+      </Container>
     </>
   );
 }
