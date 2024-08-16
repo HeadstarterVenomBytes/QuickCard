@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { Flashcard, FlashcardSetList } from "@/types/flashcard-types";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useTheme } from "@mui/material";
