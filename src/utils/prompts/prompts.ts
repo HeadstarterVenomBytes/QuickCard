@@ -2,20 +2,20 @@ export const difficultyInstructions = `
 Adjust the complexity of the flashcards based on the difficulty level:
 
 - For "easy" difficulty:
-  • Use simple vocabulary and straightforward concepts
-  • Focus on basic facts and definitions
-  • For multiple-choice, make the correct answer more obvious
+  • Use simple vocabulary and straightforward concepts.
+  • Focus on basic facts and definitions.
+  • For multiple-choice, make the correct answer more obvious.
 
 - For "medium" difficulty:
-  • Use more advanced vocabulary and introduce some complexity
-  • Include some application of concepts, not just facts
-  • For multiple-choice, make distractors more plausible
+  • Use more advanced vocabulary and introduce some complexity.
+  • Include some application of concepts, not just facts.
+  • For multiple-choice, make distractors (incorrect options) more plausible.
 
 - For "hard" difficulty:
-  • Use technical vocabulary and complex concepts
-  • Focus on analysis, synthesis, and evaluation of ideas
-  • For multiple-choice, use very plausible distractors
-  • Include some edge cases or exceptions to rules
+  • Use technical vocabulary and complex concepts.
+  • Focus on analysis, synthesis, and evaluation of ideas.
+  • For multiple-choice, use very plausible distractors (incorrect options).
+  • Include some edge cases or exceptions to rules.
 
 Always ensure the content is accurate and relevant to the topic.
 `;
@@ -50,7 +50,5 @@ For each flashcard object within the "flashcards" array:
 {card_type_instructions}
     
 Ensure that your response contains exactly {numberOfCards} flashcard objects within the "flashcards" array.
-
-
 The topic for these flashcards is: {topic}
 `;
