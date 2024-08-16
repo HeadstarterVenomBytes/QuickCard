@@ -46,9 +46,9 @@ export default function Home() {
       <HeroSection />
       <Container maxWidth="lg" sx={{ my: 6 }}>
         <Card>
-          <CardContent>
+           <CardContent sx={{ textAlign: "center" }}>
             <TypographyHeader title="Features" variant="h4" component="h2" />
-            <Grid container spacing={4}>
+            <Grid container spacing={4} justifyContent="center">
               {/* Feature Items */}
             </Grid>
           </CardContent>
