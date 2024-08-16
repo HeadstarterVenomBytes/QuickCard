@@ -6,12 +6,19 @@ import RenderedFlashcardGrid from "../components/FlashCardPages/RenderedFlashcar
 import { FlippedState } from "@/types/flashcardFlipState";
 import { useSearchParams } from "next/navigation";
 import Container from "@mui/material/Container";
+import TypographyHeader from "../components/TypographyHeader";
+import { toTitleCase } from "@/utils/textUtils";
 
 export default function FlashcardSet(): React.JSX.Element {
   const [flipped, setFlipped] = useState<FlippedState>({});
 
   const searchParams = useSearchParams();
   const setId = searchParams.get("setid");
+
+  if (!setId) {
+    throw new Error("Something went wrong retrieving the set name.");
+  }
+
   const flashcards = useFlashcards(setId);
 
   const handleCardClick = (id: string) => {
@@ -23,6 +30,12 @@ export default function FlashcardSet(): React.JSX.Element {
 
   return (
     <Container maxWidth="lg" sx={{ height: "100%", py: 4 }}>
+      <TypographyHeader
+        component="h2"
+        variant="h4"
+        title={toTitleCase(setId)}
+      />
+
       <RenderedFlashcardGrid
         flashcards={flashcards}
         flipped={flipped}
