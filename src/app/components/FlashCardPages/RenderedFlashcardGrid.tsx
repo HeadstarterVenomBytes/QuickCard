@@ -8,7 +8,7 @@ interface RenderedFlashcardGridProps {
   flashcards: FlashcardList<FirestoreFlashcard>;
   flipped: FlippedState;
   handleCardClick: (id: string) => void;
-  setId: string | null;
+  setId: string;
 }
 
 const RenderedFlashcardGrid: React.FC<RenderedFlashcardGridProps> = ({
