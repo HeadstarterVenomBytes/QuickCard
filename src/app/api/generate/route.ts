@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { FlashcardFormData } from "@/types/flashcard-form-types";
 import { Flashcard, FlashcardList } from "@/types/flashcard-types";
 import { generateFlashcards } from "@/utils/generateFlashcardData";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const formData: FlashcardFormData = await req.json();
+    const formData: string = await req.text();
 
     const flashcardList: FlashcardList<Flashcard> = await generateFlashcards(
       formData
