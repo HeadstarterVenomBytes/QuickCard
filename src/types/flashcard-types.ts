@@ -30,3 +30,12 @@ export type FlashcardSetList<T extends Flashcard> = FlashcardSet<T>[];
 
 // Union type for any Flashcard
 export type AnyFlashcard = Flashcard | FirestoreFlashcard;
+
+// Interface for parsing the response returned by the LLM
+export interface FlashcardResponse {
+  flashcards: Array<{
+    type: string;
+    front: string;
+    back: string | { correct: string; options: string[] };
+  }>;
+}
