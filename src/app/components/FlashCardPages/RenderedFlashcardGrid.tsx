@@ -8,22 +8,25 @@ interface RenderedFlashcardGridProps {
   flashcards: FlashcardList<FirestoreFlashcard>;
   flipped: FlippedState;
   handleCardClick: (id: string) => void;
+  setId: string | null;
 }
 
 const RenderedFlashcardGrid: React.FC<RenderedFlashcardGridProps> = ({
   flashcards,
   flipped,
   handleCardClick,
+  setId
 }) => {
   return (
-    <Container maxWidth="md">
-      <Grid container spacing={3} sx={{ mt: 4 }}>
-        {flashcards.map((flashcard) => (
-          <Grid item xs={12} sm={6} md={4} key={flashcard.id}>
+    <Container maxWidth="md" style={{ height:"100%" }}>
+      <Grid container spacing={12} sx={{ mt: 4 }} style={{ height:"100%" }}>
+        {flashcards?.map((flashcard) => (
+          <Grid item xs={12} sm={6} md={4} key={flashcard?.id} style={{ height:"50%" }}>
             <FlashcardComponent
               flashcard={flashcard}
-              isFlipped={!!flipped[flashcard.id]}
-              onClick={() => handleCardClick(flashcard.id)}
+              isFlipped={!!flipped[flashcard?.id]}
+              onClick={() => handleCardClick(flashcard?.id)}
+              setId={setId}
             />
           </Grid>
         ))}

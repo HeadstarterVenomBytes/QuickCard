@@ -5,15 +5,15 @@ import { Container, Box } from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";
 import TextInput from "../components/TextInput";
 import PrimaryButton from "../components/PrimaryButton";
-import GeneratedFlashcardsGrid from "../components/GeneratedFlashcardsGrid";
+import GeneratedFlashcardsGrid from "../components/FlashCardPages/GeneratedFlashcardsGrid";
 import {
   Flashcard,
   FlashcardList,
   FlashcardSet,
 } from "@/types/flashcard-types";
 import { useSaveFlashcards } from "@/hooks/useSaveFlashcards";
-import SaveFlashcardsButton from "../components/SaveFlashcardsButton";
-import SaveFlashcardsDialog from "../components/SaveFlashcardsDialog";
+import SaveFlashcardsButton from "../components/FlashCardPages/SaveFlashcardsButton";
+import SaveFlashcardsDialog from "../components/FlashCardPages/SaveFlashcardsDialog";
 
 export default function Generate(): React.JSX.Element {
   const [text, setText] = useState<string>("");

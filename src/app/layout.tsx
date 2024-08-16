@@ -17,11 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ height:"100%" }}>
       <ClerkProvider>
         <FirebaseAuthProvider>
-          <body className={inter.className}>
-            <main>{children}</main>
+          <body className={inter.className} style={{ height:"100%"}}>
+            <main style={{ height:"100%" }}>{children}</main>
           </body>
         </FirebaseAuthProvider>
       </ClerkProvider>
