@@ -8,7 +8,7 @@ import FlashcardSetsOverviewGrid from "../components/FlashCardPages/FlashcardSet
 import TypographyHeader from "../components/TypographyHeader";
 import Container from "@mui/material/Container";
 
-export default function Flashcard(): React.JSX.Element {
+export default function FlashcardSets(): React.JSX.Element {
   const router = useRouter();
   const { flashcardSets, isLoading, error } = useFlashcardSets();
 
