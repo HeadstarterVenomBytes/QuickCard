@@ -5,9 +5,10 @@ import useFlashcards from "@/hooks/useFlashcards";
 import RenderedFlashcardGrid from "../components/FlashCardPages/RenderedFlashcardGrid";
 import { FlippedState } from "@/types/flashcardFlipState";
 import { useSearchParams } from "next/navigation";
-import Container from "@mui/material/Container";
+import { Box, Container } from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";
 import { toTitleCase } from "@/utils/textUtils";
+import SideNavBar from "../components/SideNavBar";
 
 export default function FlashcardSet(): React.JSX.Element {
   const [flipped, setFlipped] = useState<FlippedState>({});
@@ -29,19 +30,22 @@ export default function FlashcardSet(): React.JSX.Element {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ height: "100%", py: 4 }}>
-      <TypographyHeader
-        component="h2"
-        variant="h4"
-        title={toTitleCase(setId)}
-      />
+    <Container maxWidth="lg" sx={{ height: "100%", py: 4, display: "flex" }}>
+      <SideNavBar />
+      <Box sx={{ flexGrow: 1, p: 3 }}>
+        <TypographyHeader
+          component="h2"
+          variant="h4"
+          title={toTitleCase(setId)}
+        />
 
-      <RenderedFlashcardGrid
-        flashcards={flashcards}
-        flipped={flipped}
-        handleCardClick={handleCardClick}
-        setId={setId}
-      />
+        <RenderedFlashcardGrid
+          flashcards={flashcards}
+          flipped={flipped}
+          handleCardClick={handleCardClick}
+          setId={setId}
+        />
+      </Box>
     </Container>
   );
 }

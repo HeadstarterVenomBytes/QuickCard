@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { AnyFlashcard, FlashcardSetList } from "@/types/flashcard-types";
+import { Container, Box } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useFlashcardSets } from "@/hooks/useFlashcardSets";
 import FlashcardSetsOverviewGrid from "../components/FlashCardPages/FlashcardSetsOverviewGrid";
 import TypographyHeader from "../components/TypographyHeader";
-import Container from "@mui/material/Container";
+import SideNavBar from "../components/SideNavBar";
 
 export default function FlashcardSets(): React.JSX.Element {
   const router = useRouter();
@@ -30,13 +31,18 @@ export default function FlashcardSets(): React.JSX.Element {
   }
 
   return (
-    <Container maxWidth="lg">
-      <TypographyHeader title="Recent Sets" />
-      <FlashcardSetsOverviewGrid
-        flashcardSets={flashcardSets}
-        onSetClick={handleSetClick}
-      />
-      <TypographyHeader title="Based On Your Interest" />
+    <Container maxWidth="lg" sx={{ height: "100vh" }}>
+      <Box sx={{ display: "flex" }}>
+        <SideNavBar />
+        <Box sx={{ flexGrow: 1, p: 3 }}>
+          <TypographyHeader title="Recent Sets" />
+          <FlashcardSetsOverviewGrid
+            flashcardSets={flashcardSets}
+            onSetClick={handleSetClick}
+          />
+          <TypographyHeader title="Based On Your Interest" />
+        </Box>
+      </Box>
     </Container>
   );
 }

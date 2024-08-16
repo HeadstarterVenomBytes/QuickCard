@@ -15,6 +15,7 @@ import { FlashcardFormData } from "@/types/flashcard-form-types";
 import SaveFlashcardsButton from "../components/FlashCardPages/SaveFlashcardsButton";
 import SaveFlashcardsDialog from "../components/FlashCardPages/SaveFlashcardsDialog";
 import FlashcardForm from "../components/FlashcardForm";
+import SideNavBar from "../components/SideNavBar";
 
 export default function Generate(): React.JSX.Element {
   const [formData, setFormData] = useState<FlashcardFormData>({
@@ -130,8 +131,9 @@ export default function Generate(): React.JSX.Element {
   };
 
   return (
-    <Container maxWidth="md">
-      <Box sx={{ my: 4 }}>
+    <Container maxWidth="lg" sx={{ display: "flex" }}>
+      <SideNavBar />
+      <Box sx={{ flexGrow: 1, p: 3 }}>
         <TypographyHeader title="Generate Flashcards" />
         <FlashcardForm
           formData={formData}
