@@ -50,5 +50,6 @@ For each flashcard object within the "flashcards" array:
 {card_type_instructions}
     
 Ensure that your response contains exactly {numberOfCards} flashcard objects within the "flashcards" array.
+
 The topic for these flashcards is: {topic}
 `;
