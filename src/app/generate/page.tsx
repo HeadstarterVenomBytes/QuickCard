@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import { Container, Box } from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";
-import TextInput from "../components/TextInput";
-import PrimaryButton from "../components/PrimaryButton";
+import { SelectChangeEvent } from "@mui/material";
 import GeneratedFlashcardsGrid from "../components/FlashCardPages/GeneratedFlashcardsGrid";
 import {
   Flashcard,
@@ -12,26 +11,79 @@ import {
   FlashcardSet,
 } from "@/types/flashcard-types";
 import { useSaveFlashcards } from "@/hooks/useSaveFlashcards";
+import { FlashcardFormData } from "@/types/flashcard-form-types";
 import SaveFlashcardsButton from "../components/FlashCardPages/SaveFlashcardsButton";
 import SaveFlashcardsDialog from "../components/FlashCardPages/SaveFlashcardsDialog";
+import FlashcardForm from "../components/FlashcardForm";
 
 export default function Generate(): React.JSX.Element {
-  const [text, setText] = useState<string>("");
+  const [formData, setFormData] = useState<FlashcardFormData>({
+    topic: "",
+    numberOfCards: 10,
+    difficultyLevel: "medium",
+    cardType: "question-answer",
+  });
+  const [formErrors, setFormErrors] = useState<
+    Partial<Record<keyof FlashcardFormData, string>>
+  >({});
   const [flashcards, setFlashcards] = useState<FlashcardList<Flashcard>>([]);
   const [setName, setSetName] = useState<string>("");
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const { saveFlashcards, isLoading, error } = useSaveFlashcards();
 
+  const handleChangeInput = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: name === "numberOfCards" ? parseInt(value, 10) : value,
+    }));
+    // Clear error when field is changed
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
+  };
+
+  const handleChangeSelect = (event: SelectChangeEvent) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    // Clear error when field is changed
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Partial<Record<keyof FlashcardFormData, string>> = {};
+    if (!formData.topic.trim()) {
+      newErrors.topic = "Topic is required";
+    }
+    // TODO: adjust this based on the subscription plan?
+    if (formData.numberOfCards < 1 || formData.numberOfCards > 50) {
+      newErrors.numberOfCards = "Number of cards must between 1 and 100";
+    }
+    setFormErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (): Promise<void> => {
-    if (!text.trim()) {
-      alert("Please enter some text to generate flashcards.");
+    if (!validateForm()) {
       return;
     }
 
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
-        body: text,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formData }),
       });
 
       if (!response.ok) {
@@ -58,6 +110,10 @@ export default function Generate(): React.JSX.Element {
     const newFlashcardSet: FlashcardSet<Flashcard> = {
       name: setName,
       flashcards: flashcards,
+      topic: formData.topic,
+      numberOfCards: formData.numberOfCards,
+      difficultyLevel: formData.difficultyLevel,
+      cardType: formData.cardType,
     };
 
     await saveFlashcards({
@@ -73,21 +129,17 @@ export default function Generate(): React.JSX.Element {
     });
   };
 
-  // TODO: style the error thing
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
         <TypographyHeader title="Generate Flashcards" />
-        <TextInput
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          label="Enter text"
-          multiline
-          rows={4}
+        <FlashcardForm
+          formData={formData}
+          onChangeInput={handleChangeInput}
+          onChangeSelect={handleChangeSelect}
+          onSubmit={handleSubmit}
+          errors={formErrors}
         />
-        <PrimaryButton onClick={handleSubmit}>
-          Generate Flashcards
-        </PrimaryButton>
       </Box>
       {flashcards.length > 0 && (
         <>
