@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Container, Paper } from "@mui/material";
 import LandingPageAppBar from "./LandingPageBar";
 import HeroSection from "./HeroSection";
+import PricingPlans from "./PricingPlans";
 
 const LandingPage: React.FC = () => {
   return (
@@ -52,6 +53,14 @@ const LandingPage: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
+      <Container>
+        <Paper elevation={3} sx={{ padding: 4, marginTop: 4 }}>
+          <Typography variant="h2" component="h1" align="center" gutterBottom>
+            Pricing Plans
+          </Typography>
+          <PricingPlans /> {/* Ensure this line is present */}
+        </Paper>
+      </Container>
     </Box>
   );
 };
