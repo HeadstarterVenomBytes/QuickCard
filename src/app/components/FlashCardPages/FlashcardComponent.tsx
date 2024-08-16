@@ -1,12 +1,10 @@
 import React from "react";
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Typography,
-  Box,
-} from "@mui/material";
-import Link from "next/link";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
 import { FirestoreFlashcard } from "@/types/flashcard-types";
 
 interface FlashcardComponentProps {
@@ -21,56 +19,95 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
   isFlipped,
   onClick,
 }) => {
+  const theme = useTheme();
+
   return (
     <Card
-      style={{
-        background: "#003050",
-        boxShadow: "4px 4px 9px rgba(0, 0, 0, 0.25)",
-        borderRadius: "20px",
-      }}
+      elevation={3}
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "auto",
+        height: "100%",
         width: "100%",
-        minHeight: 150,
-        maxHeight: "100%",
+        minHeight: 200,
+        borderRadius: 2,
+        backgroundColor: theme.palette.primary.main,
+        "&:hover": {
+          boxShadow: theme.shadows[8],
+        },
+        position: "relative",
+        perspective: 1000,
       }}
     >
-      <CardActionArea onClick={onClick}>
-        <CardContent sx={{ flexGrow: 1 }}>
-          <Box sx={{ perspective: 1000 }}>
+      <CardActionArea
+        onClick={onClick}
+        sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+      >
+        <CardContent
+          sx={{
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: 200,
+            width: "100%",
+            position: "relative",
+            perspective: 1000,
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              transformStyle: "preserve-3d",
+              transition: "transform 0.6s",
+              transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+            }}
+          >
             <Box
               sx={{
-                transformStyle: "preserve-3d",
-                transition: "transform 0.6s",
-                transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backfaceVisibility: "hidden",
+                transform: "rotateY(0deg)",
               }}
             >
-              <Box
+              <Typography
+                variant="h6"
+                component="div"
                 sx={{
-                  position: "absolute",
-                  width: "100%",
-                  backfaceVisibility: "hidden",
-                  transform: "rotateY(0deg)",
+                  color: theme.palette.primary.contrastText,
                 }}
               >
-                <Typography variant="h5" component="div" color="#FFFFFF">
-                  {flashcard?.front}
-                </Typography>
-              </Box>
-              <Box
+                {flashcard?.front}
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                backfaceVisibility: "hidden",
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                textAlign: "center",
+                padding: 2,
+                transform: "rotateY(180deg)",
+              }}
+            >
+              <Typography
+                variant="h6"
+                component="div"
                 sx={{
-                  position: "absolute",
-                  width: "100%",
-                  backfaceVisibility: "hidden",
-                  transform: "rotateY(180deg)",
+                  color: theme.palette.primary.contrastText,
                 }}
               >
-                <Typography variant="h5" component="div" color="#FFFFFF">
-                  {flashcard?.back}
-                </Typography>
-              </Box>
+                {flashcard?.back}
+              </Typography>
             </Box>
           </Box>
         </CardContent>
