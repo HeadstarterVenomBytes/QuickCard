@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import { FirebaseAuthProvider } from "./context/FirebaseAuthContext";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -22,20 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <header>
-            <SignedOut>
-              <SignInButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
-          <main>{children}</main>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" style={{ height:"100%" }}>
+      <ClerkProvider>
+        <FirebaseAuthProvider>
+          <body className={inter.className} style={{ height:"100%"}}>
+            <main style={{ height:"100%" }}>{children}</main>
+          </body>
+        </FirebaseAuthProvider>
+      </ClerkProvider>
+    </html>
   );
 }

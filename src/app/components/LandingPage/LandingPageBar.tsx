@@ -9,7 +9,7 @@ const LandingPageAppBar: React.FC<LandingPageAppBarProps> = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          QuickCard SaaS
+          <Button href="/" color="inherit" > QuickCard SaaS </Button>
         </Typography>
         <SignedOut>
           <Button color="inherit" href="/sign-in">
