@@ -12,6 +12,10 @@ export default function FlashcardSets(): React.JSX.Element {
   const router = useRouter();
   const { flashcardSets, isLoading, error } = useFlashcardSets();
 
+  if (!flashcardSets) {
+    throw new Error("Error occured while retrieving flashcard sets.");
+  }
+
   const handleSetClick = (id: string) => {
     router.push(`/flashcard?setid=${id}`);
   };
@@ -29,7 +33,7 @@ export default function FlashcardSets(): React.JSX.Element {
     <Container maxWidth="lg">
       <TypographyHeader title="Recent Sets" />
       <FlashcardSetsOverviewGrid
-        flashcardSets={flashcardSets || []}
+        flashcardSets={flashcardSets}
         onSetClick={handleSetClick}
       />
       <TypographyHeader title="Based On Your Interest" />
