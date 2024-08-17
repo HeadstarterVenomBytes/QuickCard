@@ -5,7 +5,7 @@ import { AnyFlashcard, FlashcardSetList } from "@/types/flashcard-types";
 import { Container, Box, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useFlashcardSets } from "@/hooks/useFlashcardSets";
-import FlashcardSetsOverviewGrid from "../components/FlashCardPages/FlashcardSetsOverviewGrid";
+import QuizzesdOverviewGrid from "../components/QuizzesPages/QuizzesOverfiewQuizzesGrid";
 import TypographyHeader from "../components/TypographyHeader";
 import SideNavBar from "../components/SideNavBar";
 
@@ -19,7 +19,7 @@ export default function QuizzesList(): React.JSX.Element {
     }
 
     const handleSetClick = (id: string) => {
-        router.push(`/flashcard?setid=${id}`);
+        router.push(`/quiz?setid=${id}`);
     };
 
     if (isLoading) {
@@ -39,7 +39,7 @@ export default function QuizzesList(): React.JSX.Element {
                         title="Quizzes"
                         color={theme.palette.secondary.main}
                     />
-                    <FlashcardSetsOverviewGrid
+                    <QuizzesdOverviewGrid
                         flashcardSets={flashcardSets}
                         onSetClick={handleSetClick}
                     />
