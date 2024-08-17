@@ -43,7 +43,7 @@ const SideNavBar: React.FC<SideNavBarProps> = ({}) => {
         [`& .MuiDrawer-paper`]: {
           width: 240,
           boxSizing: "border-box",
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: theme.palette.primaryContainer.main,
         },
       }}
     >
@@ -53,13 +53,16 @@ const SideNavBar: React.FC<SideNavBarProps> = ({}) => {
             <Link
               href={path}
               key={text}
-              color="secondary"
+              color={theme.palette.tertiary.main}
               component={NextLink}
               passHref
             >
               <ListItemButton>
                 <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText
+                  color={theme.palette.tertiary.contrastText}
+                  primary={text}
+                />
               </ListItemButton>
             </Link>
           ))}

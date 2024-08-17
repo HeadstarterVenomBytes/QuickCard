@@ -5,7 +5,7 @@ import useFlashcards from "@/hooks/useFlashcards";
 import RenderedFlashcardGrid from "../components/FlashCardPages/RenderedFlashcardGrid";
 import { FlippedState } from "@/types/flashcardFlipState";
 import { useSearchParams } from "next/navigation";
-import { Box, Container } from "@mui/material";
+import { Box, Container, useTheme } from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";
 import { toTitleCase } from "@/utils/textUtils";
 import SideNavBar from "../components/SideNavBar";
@@ -15,6 +15,8 @@ export default function FlashcardSet(): React.JSX.Element {
 
   const searchParams = useSearchParams();
   const setId = searchParams.get("setid");
+
+  const theme = useTheme();
 
   if (!setId) {
     throw new Error("Something went wrong retrieving the set name.");
@@ -36,6 +38,7 @@ export default function FlashcardSet(): React.JSX.Element {
         <TypographyHeader
           component="h2"
           variant="h4"
+          color={theme.palette.secondary.main}
           title={toTitleCase(setId)}
         />
 

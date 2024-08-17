@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Container } from "@mui/material";
+import { Grid, Container, useTheme } from "@mui/material";
 import { FlippedState } from "@/types/flashcardFlipState";
 import { FlashcardList, FirestoreFlashcard } from "@/types/flashcard-types";
 import FlashcardComponent from "./FlashcardComponent";
@@ -17,8 +17,13 @@ const RenderedFlashcardGrid: React.FC<RenderedFlashcardGridProps> = ({
   handleCardClick,
   setId,
 }) => {
+  const theme = useTheme();
+
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container
+      maxWidth="lg"
+      sx={{ py: 4, bgcolor: theme.palette.surfaceContainerHighest.main }}
+    >
       <Grid container spacing={3}>
         {flashcards?.map((flashcard) => (
           <Grid

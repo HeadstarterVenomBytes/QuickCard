@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Flashcard, FlashcardSetList } from "@/types/flashcard-types";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useTheme } from "@mui/material";
@@ -16,7 +17,6 @@ const FlashcardSetsOverviewGrid: React.FC<FlashcardSetsOverviewGridProps> = ({
 }) => {
   const theme = useTheme();
 
-  // TODO: use material ui for themeing the card
   // TODO: padding on the sides?
   return (
     <Grid container spacing={3} sx={{ py: 4 }} style={{ height: "100%" }}>
@@ -26,10 +26,15 @@ const FlashcardSetsOverviewGrid: React.FC<FlashcardSetsOverviewGridProps> = ({
             sx={{
               height: "100%",
               width: "100%",
-              background: "#003050",
-              border: "2px solid #003050",
-              boxShadow: "3.13962px 3.13962px 6.27925px rgba(0, 0, 0, 0.15)",
-              borderRadius: "12px",
+              bgcolor: theme.palette.primary.main,
+              border: `2px solid ${theme.palette.inversePrimary.main}`,
+              boxShadow: `3.13962px 3.13962px 6.27925px ${theme.palette.shadow.main}`,
+              borderRadius: theme.shape.borderRadius * 1.5,
+
+              "&hover": {
+                background: theme.palette.primary.dark,
+                borderColor: theme.palette.primaryContainer.main,
+              },
             }}
           >
             <CardActionArea onClick={() => onSetClick(set?.name)}>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { AnyFlashcard, FlashcardSetList } from "@/types/flashcard-types";
-import { Container, Box } from "@mui/material";
+import { Container, Box, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useFlashcardSets } from "@/hooks/useFlashcardSets";
 import FlashcardSetsOverviewGrid from "../components/FlashCardPages/FlashcardSetsOverviewGrid";
@@ -11,6 +11,7 @@ import SideNavBar from "../components/SideNavBar";
 
 export default function FlashcardSets(): React.JSX.Element {
   const router = useRouter();
+  const theme = useTheme();
   const { flashcardSets, isLoading, error } = useFlashcardSets();
 
   if (!flashcardSets) {
@@ -35,12 +36,18 @@ export default function FlashcardSets(): React.JSX.Element {
       <Box sx={{ display: "flex" }}>
         <SideNavBar />
         <Box sx={{ flexGrow: 1, p: 3 }}>
-          <TypographyHeader title="Recent Sets" />
+          <TypographyHeader
+            title="Recent Sets"
+            color={theme.palette.secondary.main}
+          />
           <FlashcardSetsOverviewGrid
             flashcardSets={flashcardSets}
             onSetClick={handleSetClick}
           />
-          <TypographyHeader title="Based On Your Interest" />
+          <TypographyHeader
+            title="Based On Your Interest"
+            color={theme.palette.secondary.main}
+          />
         </Box>
       </Box>
     </Container>
