@@ -100,7 +100,7 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
               }}
             >
               <Typography
-                variant="h6"
+                variant="body1"
                 component="div"
                 sx={{
                   color: theme.palette.primary.contrastText,
