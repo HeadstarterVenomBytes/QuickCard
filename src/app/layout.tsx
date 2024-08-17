@@ -3,6 +3,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { FirebaseAuthProvider } from "./context/FirebaseAuthContext";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material";
+import theme from "@/styles/theme";
 
 export const metadata: Metadata = {
   title: "QuickCard",
@@ -20,8 +22,10 @@ export default function RootLayout({
         <FirebaseAuthProvider>
           <body>
             <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-              <CssBaseline />
-              {children}
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                {children}
+              </ThemeProvider>
             </AppRouterCacheProvider>
           </body>
         </FirebaseAuthProvider>
