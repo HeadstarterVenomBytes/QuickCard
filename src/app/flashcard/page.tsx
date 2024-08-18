@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import useFlashcards from "@/hooks/useFlashcards";
+import useFlashcardSet from "@/hooks/useFlashcardSet";
 import RenderedFlashcardGrid from "../components/FlashCardPages/RenderedFlashcardGrid";
 import { FlippedState } from "@/types/flashcardFlipState";
 import { useSearchParams } from "next/navigation";
@@ -22,7 +22,7 @@ export default function FlashcardSet(): React.JSX.Element {
     throw new Error("Something went wrong retrieving the set name.");
   }
 
-  const flashcards = useFlashcards(setId);
+  const flashcardSet = useFlashcardSet(setId);
 
   const handleCardClick = (id: string) => {
     setFlipped((prev) => ({
@@ -43,7 +43,7 @@ export default function FlashcardSet(): React.JSX.Element {
         />
 
         <RenderedFlashcardGrid
-          flashcards={flashcards}
+          flashcards={flashcardSet?.flashcards ?? []}
           flipped={flipped}
           handleCardClick={handleCardClick}
           setId={setId}
