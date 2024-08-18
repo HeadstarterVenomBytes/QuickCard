@@ -106,7 +106,7 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
                   color: theme.palette.primary.contrastText,
                 }}
               >
-                {`String(${flashcard?.back})`}
+                {flashcard?.back}
               </Typography>
             </Box>
           </Box>
