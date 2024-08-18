@@ -1,9 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Container, Box } from "@mui/material";
+import {
+  Container,
+  Box,
+  SelectChangeEvent,
+  Paper,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import TypographyHeader from "../components/TypographyHeader";
-import { SelectChangeEvent } from "@mui/material";
 import GeneratedFlashcardsGrid from "../components/FlashCardPages/GeneratedFlashcardsGrid";
 import {
   Flashcard,
@@ -15,6 +21,7 @@ import { FlashcardFormData } from "@/types/flashcard-form-types";
 import SaveFlashcardsButton from "../components/FlashCardPages/SaveFlashcardsButton";
 import SaveFlashcardsDialog from "../components/FlashCardPages/SaveFlashcardsDialog";
 import FlashcardForm from "../components/FlashcardForm";
+import SideNavBar from "../components/SideNavBar";
 
 export default function Generate(): React.JSX.Element {
   const [formData, setFormData] = useState<FlashcardFormData>({
@@ -30,6 +37,8 @@ export default function Generate(): React.JSX.Element {
   const [setName, setSetName] = useState<string>("");
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const { saveFlashcards, isLoading, error } = useSaveFlashcards();
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [generateError, setGenerateError] = useState<string | null>(null);
 
   const handleChangeInput = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -77,6 +86,9 @@ export default function Generate(): React.JSX.Element {
       return;
     }
 
+    setIsGenerating(true);
+    setGenerateError(null);
+
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
@@ -94,7 +106,11 @@ export default function Generate(): React.JSX.Element {
       setFlashcards(data);
     } catch (error) {
       console.error("Error generating flashcards:", error);
-      alert("An error occured while generating flashcards. Please try again.");
+      setGenerateError(
+        "An error occurred while generating flashcards. Please try again."
+      );
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -130,31 +146,60 @@ export default function Generate(): React.JSX.Element {
   };
 
   return (
-    <Container maxWidth="md">
-      <Box sx={{ my: 4 }}>
-        <TypographyHeader title="Generate Flashcards" />
-        <FlashcardForm
-          formData={formData}
-          onChangeInput={handleChangeInput}
-          onChangeSelect={handleChangeSelect}
-          onSubmit={handleSubmit}
-          errors={formErrors}
+    <Container maxWidth="lg" sx={{ display: "flex", py: 4 }}>
+      <SideNavBar />
+      <Box sx={{ flexGrow: 1, ml: 2 }}>
+        <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
+          <Typography
+            variant="h4"
+            component="h1"
+            gutterBottom
+            sx={{ mb: 3, color: "primary.main" }}
+          >
+            Generate Flashcards
+          </Typography>
+          <FlashcardForm
+            formData={formData}
+            onChangeInput={handleChangeInput}
+            onChangeSelect={handleChangeSelect}
+            onSubmit={handleSubmit}
+            errors={formErrors}
+          />
+        </Paper>
+
+        {isGenerating && (
+          <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
+            <CircularProgress />
+          </Box>
+        )}
+
+        {generateError && (
+          <Typography color="error" sx={{ mt: 2, textAlign: "center" }}>
+            {generateError}
+          </Typography>
+        )}
+
+        {flashcards.length > 0 && (
+          <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
+            <GeneratedFlashcardsGrid flashcards={flashcards} />
+            <SaveFlashcardsButton onClick={handleOpenDialog} />
+          </Paper>
+        )}
+
+        <SaveFlashcardsDialog
+          open={dialogOpen}
+          setName={setName}
+          onSetNameChange={(e) => setSetName(e.target.value)}
+          onSave={handleSaveFlashCards}
+          onClose={handleCloseDialog}
         />
+
+        {error && (
+          <Typography color="error" sx={{ mt: 2 }}>
+            {error}
+          </Typography>
+        )}
       </Box>
-      {flashcards.length > 0 && (
-        <>
-          <GeneratedFlashcardsGrid flashcards={flashcards} />
-          <SaveFlashcardsButton onClick={handleOpenDialog} />
-        </>
-      )}
-      <SaveFlashcardsDialog
-        open={dialogOpen}
-        setName={setName}
-        onSetNameChange={(e) => setSetName(e.target.value)}
-        onSave={handleSaveFlashCards}
-        onClose={handleCloseDialog}
-      />
-      {error && <p style={{ color: "red" }}>{error}</p>}
     </Container>
   );
 }
