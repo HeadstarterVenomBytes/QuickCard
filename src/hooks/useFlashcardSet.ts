@@ -10,8 +10,16 @@ import { useFirebaseAuth } from "@/app/context/FirebaseAuthContext";
 
 function useFlashcardSet(setId: string | null) {
   const { firebaseUser, loading } = useFirebaseAuth();
-  const [flashcardSet, setFlashcardSet] =
-    useState<FlashcardSet<FirestoreFlashcard> | null>(null);
+  const [flashcardSet, setFlashcardSet] = useState<
+    FlashcardSet<FirestoreFlashcard>
+  >({
+    name: "",
+    topic: "",
+    numberOfCards: 0,
+    difficultyLevel: "easy",
+    cardType: "question-answer",
+    flashcards: [],
+  });
 
   useEffect(() => {
     async function fetchFlashcards() {
