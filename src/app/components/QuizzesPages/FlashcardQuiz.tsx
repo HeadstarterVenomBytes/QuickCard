@@ -1,9 +1,15 @@
 import React from "react";
-import { Box, IconButton, Typography, LinearProgress } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  LinearProgress,
+  Chip,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import FlashcardComponent from "../FlashCardPages/FlashcardComponent";
-import { useTheme } from "@mui/material";
 import { FlashcardSet, FirestoreFlashcard } from "@/types/flashcard-types";
 
 interface FlashcardQuizProps {
@@ -28,27 +34,46 @@ const FlashcardQuiz: React.FC<FlashcardQuizProps> = ({
 
   return (
     <Box
-      sx={{ width: "100%", maxWidth: 600, margin: "auto", textAlign: "center" }}
+      sx={{
+        width: "100%",
+        maxWidth: 600,
+        margin: "auto",
+        textAlign: "center",
+        backgroundColor: theme.palette.surfaceContainer.main,
+        borderRadius: 2,
+        padding: 3,
+        boxShadow: theme.shadows[1],
+      }}
     >
-      <Box sx={{ paddingBottom: 2 }}>
-        <Typography variant="h5" gutterBottom>
-          {flashcardSet.topic}
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          color={theme.palette.secondary.contrastText}
-        >
-          Difficulty: {flashcardSet.difficultyLevel}
-        </Typography>
-        <Typography
-          variant="subtitle2"
-          color={theme.palette.secondary.contrastText}
-        >
-          Card Type: {flashcardSet.cardType}
-        </Typography>
+      <Typography variant="h5" gutterBottom color="primary">
+        {flashcardSet.topic}
+      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "left", gap: 1, mb: 2 }}>
+        <Chip
+          label={`Difficulty: ${flashcardSet.difficultyLevel}`}
+          color="primary"
+          sx={{
+            bgcolor: theme.palette.primaryContainer.main,
+            color: theme.palette.primaryContainer.contrastText,
+          }}
+        />
+        <Chip
+          label={`Card Type: ${flashcardSet.cardType}`}
+          color="secondary"
+          sx={{
+            backgroundColor: theme.palette.secondaryContainer.main,
+            color: theme.palette.secondaryContainer.contrastText,
+          }}
+        />
       </Box>
-
-      <Box sx={{ padding: 2 }}>
+      <Box
+        sx={{
+          padding: 2,
+          bgcolor: theme.palette.surfaceContainerHighest.main,
+          borderRadius: 1,
+          boxShadow: theme.shadows[2],
+        }}
+      >
         <FlashcardComponent
           flashcard={flashcardSet.flashcards[activeStep]}
           isFlipped={isFlipped}
@@ -69,6 +94,7 @@ const FlashcardQuiz: React.FC<FlashcardQuizProps> = ({
           disabled={activeStep === 0}
           onClick={onBack}
           aria-label="Back"
+          sx={{ color: theme.palette.tertiary.main }}
         >
           <ArrowBackIosNewIcon />
         </IconButton>
@@ -76,13 +102,20 @@ const FlashcardQuiz: React.FC<FlashcardQuizProps> = ({
         <LinearProgress
           variant="determinate"
           value={progress}
-          sx={{ width: "60%" }}
+          sx={{
+            width: "60%",
+            backgroundColor: theme.palette.surfaceContainerHighest.main,
+            "& .MuiLinearProgress-bar": {
+              backgroundColor: theme.palette.primary.main,
+            },
+          }}
         />
 
         <IconButton
           disabled={activeStep === flashcardSet.flashcards.length - 1}
           onClick={onNext}
           aria-label="Next"
+          sx={{ color: theme.palette.tertiary.main }}
         >
           <ArrowForwardIosIcon />
         </IconButton>
