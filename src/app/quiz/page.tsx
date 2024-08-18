@@ -58,7 +58,7 @@ export default function FlashcardQuizPage(): React.JSX.Element {
         <FlashcardQuiz
           flashcardSet={flashcardSet!}
           activeStep={activeStep}
-          isFlipped={!!flipped[flashcardSet!.flashcards[activeStep]?.id]}
+          isFlipped={!!flipped[flashcardSet.flashcards[activeStep]?.id]}
           onFlip={handleFlip}
           onNext={handleNext}
           onBack={handleBack}
