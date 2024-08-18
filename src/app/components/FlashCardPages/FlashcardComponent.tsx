@@ -100,13 +100,13 @@ const FlashcardComponent: React.FC<FlashcardComponentProps> = ({
               }}
             >
               <Typography
-                variant="body1"
+                variant="h6"
                 component="div"
                 sx={{
                   color: theme.palette.primary.contrastText,
                 }}
               >
-                {flashcard?.back}
+                {`String(${flashcard?.back})`}
               </Typography>
             </Box>
           </Box>
